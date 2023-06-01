@@ -1,32 +1,31 @@
 const {REST, Routes} = require('discord.js');
-const {config} = require('./Data/config.json');
+const {clientID, guildID, token} = require('./Data/config.json');
 
-//ファイルシステムを使用してモジュールをロードします。
-const fs = reqire('node:fs');ddddddddd
+//ファイルシステムを使用して./Commandにあるソースからモジュールをロードします。
+const fs = require('node:fs');
 const commands = [];
-const commandFiles = fs.readdirSync('./Command').filter(file => file.endWith('.js'));
-const rest = new REST();
+const commandFiles = fs.readdirSync('./Command').filter(file => file.endsWith('.js'));
+const  rest = new REST({version:'10'}).setToken(token);
 
-//コマンドモジュール読み込み
-console.log('Command Fileを読み込みます。');
-for(const file of commandFiles)
-{
-  console.log(`${file}を読み込みます。`);
-  const command = require(`./Command/${file}`);
-  console.log('取得しました。');
-  console.log('登録しました。');
+//コマンドモジュール読み込み。
+console.log('Command Fileを解析します。');
+for(const file of commandFiles)　{
+    console.log(`${file}を解析します。`);
+    const command = require(`./Command/${file}`);
+    console.log('取得しました。');
+    commands.push(command.data);
+    console.log('登録しました。')
 }
 console.log('Command Fileの解析が終了しました。');
 
-(async () => {
-  try
-  {
-    console.log(`${commands.length}個のアプリケーションコマンドを登録します。`);
-    await rest.put(
-      Routes.applicationGuildCommand(clientID, guildID),
-      {body: commands}
-    );
-    console.log(`${commands.length}のサーバー固有のコマンドが登録されました。`);
-  }
-  catch(error){ console.error('コマンドの登録中にエラーがおきました。', error ); }
+(async ()=>{
+    try {
+        console.log(`${commands.length}個のアプリケーションコマンドを登録します。`);
+        await rest.put(
+            Routes.applicationGuildCommands(clientID, guildID),
+            { body: commands }
+        );
+        console.log(`${commands.length}のサーバー固有のコマンドが登録されました。`);
+    }
+    catch(error){ console.error('コマンドの登録中にエラーが起きました。', error); }
 })();

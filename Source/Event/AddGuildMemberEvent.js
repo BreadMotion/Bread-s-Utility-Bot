@@ -1,0 +1,25 @@
+const {Client, Events} = require('discord.js');
+
+let clientSrc = undefined;
+let commandsSrc =  {};
+let buttonEventsSrc = {};
+
+//メンバーが増えたら発火する。
+module.exports = 
+{
+    data: { name: 'guildMemberAdd' },
+    execute: function(client,commands,buttonEvents){
+        clientSrc = client;
+        commandsSrc = commands;
+        buttonEventsSrc = buttonEvents;
+
+        clientSrc.on(Events.GuildMemberAdd, async member => {
+            console.log("call : guildMemberAdd Event");
+            const {channelID, guildID} = require('../Data/config.json');
+
+            if(guildID !== member.guild.id) { console.log("Failed"); return; }
+            try{ member.guild.channels.cache.get(channelID).send(`${member.user.username}！俺の股間をしゃぶれ！`); }
+            catch(error){ console.log("error : guildMemberAdd Event"); }
+        });
+    }
+};
