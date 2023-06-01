@@ -18,7 +18,7 @@ module.exports =
             const {channelID, guildID} = require('../Data/config.json');
 
             if(guildID !== member.guild.id) { console.log("Failed"); return; }
-            try{ member.guild.channels.cache.get(channelID).send(`${member.user.username}！俺の股間をしゃぶれ！`); }
+            try{ member.guild.channels.cache.get(channelID).send(`${member.user.username}が参加しました。`); }
             catch(error){ console.log("error : guildMemberAdd Event"); }
         });
     }

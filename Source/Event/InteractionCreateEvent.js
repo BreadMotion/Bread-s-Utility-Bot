@@ -22,13 +22,6 @@ module.exports =
             }
 
             if(!interaction.isChatInputCommand()) { return; }
-            if(interaction.commandName === '抱かれたい！') {
-                await interaction.deferReply();
-                await wait(6);
-                await interaction.reply('抱かれたかったらしゃぶれ！');
-                await wait(12);
-                await interaction.editReply('しゃぶったらそこに寝転がれ！');
-            }
             else {
                 const command = commandsSrc[interaction.commandName];
                 try { await command.execute(interaction);  }
