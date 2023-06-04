@@ -1,5 +1,4 @@
 const {SlashCommandBuilder} = require('discord.js');
-const { setTimeout } = require('node:timers/promises');
 
 //TODO : 参加日がなんか特殊なフォーマットしている上、
 //参照先が違うのか計算が上手くいかない。修正しろ。
@@ -29,9 +28,7 @@ module.exports =
         const info = interaction.options.getString('情報') || 'NONE';
         
         if(info === '0'){
-            const reply = await interaction.reply(`${user.tag}のIDは ${user.id} です。`);
-            await setTimeout(1000 * 60 * 30);//30分後削除
-            await reply.delete();
+            await interaction.reply(`${user.tag}のIDは ${user.id} です。`);
         }
         else if(info === '1') {
             const sec = (Date.now() - interaction.member.joinedAt);
@@ -56,20 +53,14 @@ module.exports =
             console.log(`sec % 3600 / 60 ${sec % 3600 / 60}`);
 
             console.log(`sec % 60 ${sec % 60}`);
-            const reply = await interaction.reply(`${interaction.member.joinedAt} です。(バケモン嘘です。)`); 
-            await setTimeout(1000 * 60 * 30);//30分後削除
-            await reply.delete();
+            await interaction.reply(`${interaction.member.joinedAt} です。(バケモン嘘です。)`); 
             //await interaction.reply(`${user.tag}のサーバー参加時間${"\n"} ${day}日 ${hour}時 ${min}分 ${rem}秒間 です。`); 
         }
         else if(info === '2'){ 
-            const reply = await interaction.reply(`${user.tag}の名前は ${user.username} です。`);  
-            await setTimeout(1000 * 60 * 30);//30分後削除
-            await reply.delete();
+            await interaction.reply(`${user.tag}の名前は ${user.username} です。`);  
         }
         else{
-            const reply = await interaction.reply(`取得したい情報が分かりませんでした。: Target User -> ${user.tag}`); 
-            await setTimeout(1000 * 60 * 30);//30分後削除
-            await reply.delete();
+            await interaction.reply(`取得したい情報が分かりませんでした。: Target User -> ${user.tag}`); 
         }
     }
 };
