@@ -1,4 +1,5 @@
 const {Events} = require('discord.js');
+const { setTimeout } = require('node:timers/promises');
 
 let clientSrc = undefined;
 let commandsSrc =  {};
@@ -14,7 +15,7 @@ module.exports =
         commandsSrc = commands;
         buttonEventsSrc = buttonEvents;
         
-        clientSrc.on(Events.VoiceStateUpdate, (oldState, newState) => {
+        clientSrc.on(Events.VoiceStateUpdate, async (oldState, newState) => {
             const config = require("../Data/config.json");
             const channel = oldState.member.guild.channels.cache.get(config.channelID);
             const time = new Date();
@@ -25,14 +26,18 @@ module.exports =
                 {
                     var userName = oldState.member.user.username;
                     memberTimeAry.push({userName, time});
-                    channel.send(`${oldState.member.nickname}が入室しました。`);
+                    const reply = await channel.send(`${oldState.member.nickname}が入室しました。`);
+                    await setTimeout(1000 * 60 * 30);//30分後削除
+                    await reply.delete();
                     return;
                 }
                 else
                 {
                     var userName = oldState.member.user.username;
                     memberTimeAry.push({userName, time});
-                    channel.send(`${oldState.member.user.tag.slice(0, -5)}さん入室しました。`);
+                    const reply = await channel.send(`${oldState.member.user.tag.slice(0, -5)}さん入室しました。`);
+                    await setTimeout(1000 * 60 * 30);//30分後削除
+                    await reply.delete();
                     return;
                 }
             }
@@ -44,8 +49,11 @@ module.exports =
                         return element.userName === newState.member.user.username
                     });
                     var nowTime = new Date;
-                    channel.send(`${newState.member.nickname}さんが退出しました。`);
-                    channel.send(`${(nowTime.getTime() - filters[0].time.getTime()) / (1000 * 60)}分作業していました。(結構誤差ある。)`);
+                    const reply = channel.send(`${newState.member.nickname}さんが退出しました。`);
+                    const reply2 = channel.send(`${(nowTime.getTime() - filters[0].time.getTime()) / (1000 * 60)}分作業していました。(結構誤差ある。)`);
+                    await setTimeout(1000 * 60 * 30);//30分後削除
+                    await reply.delete();
+                    await reply2.delete();
                     return;
                 }
                 else
@@ -54,8 +62,11 @@ module.exports =
                         return element.userName === newState.member.user.username
                     });
                     var nowTime = new Date;
-                    channel.send(`${newState.member.user.tag.slice(0, -5)}さんが退出しました。`);
-                    channel.send(`${(nowTime.getTime() - filters[0].time.getTime()) / (1000 * 60)}分作業していました。(結構誤差ある。)`);
+                    const reply = channel.send(`${newState.member.user.tag.slice(0, -5)}さんが退出しました。`);
+                    const reply2 = channel.send(`${(nowTime.getTime() - filters[0].time.getTime()) / (1000 * 60)}分作業していました。(結構誤差ある。)`);
+                    await setTimeout(1000 * 60 * 30);//30分後削除
+                    await reply.delete();
+                    await reply2.delete();
                     return;
                 }
             }

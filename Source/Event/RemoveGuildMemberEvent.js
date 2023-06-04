@@ -1,4 +1,5 @@
 const {Events, GatewayIntentBits} = require('discord.js');
+const { setTimeout } = require('node:timers/promises');
 
 let clientSrc = undefined;
 let commandsSrc =  {};
@@ -17,7 +18,9 @@ module.exports =
             const {channelID} = require('../Data/config.json');
             const channel = member.guild.channels.cache.get(channelID); 
             try {
-                channel.send(`${member.user.username}がチャンネルから退場しました。`);  
+                const reply = await channel.send(`${member.user.username}がチャンネルから退場しました。`); 
+                await setTimeout(1000 * 60 * 30);//30分後削除
+                await reply.delete();
             }
             catch(error) { 
                 channel.send(`error Log: ${error}`);

@@ -1,4 +1,5 @@
 const {Client, Events} = require('discord.js');
+const { setTimeout } = require('node:timers/promises');
 
 let clientSrc = undefined;
 let commandsSrc =  {};
@@ -15,13 +16,15 @@ module.exports =
 
         clientSrc.on(Events.GuildMemberAdd, async member => {
             console.log("call : guildMemberAdd Event");
-            const {channelID, guildID} = require('../Data/config.json');
+            const {channelID} = require('../Data/config.json');
             const channel = member.guild.channels.cache.get(channelID);
             try{ 
-                channel.send(`${member.user.username}が参加しました。`); 
+                const reply = await channel.send(`${member.user.username}が参加しました。`); 
+                await setTimeout(1000 * 60 * 30);//30分後削除
+                await reply.delete();
             }
             catch(error){ 
-                console.log(`ErrorLog: ${error}`); 
+                await txtChannel.send(`Error : ${error}`);
             }
         });
     }

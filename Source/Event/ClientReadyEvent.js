@@ -1,4 +1,5 @@
 const {Client, Events} = require('discord.js');
+const { setTimeout } = require('node:timers/promises');
 
 let clientSrc = undefined;
 let commandsSrc =  {};
@@ -39,7 +40,7 @@ module.exports =
             console.log('コマンドの登録作業終了しました。');
         
             //起動したことをチャンネルに知らせます。
-            await channel.send(`Bread Utility Botの起動準備が完了しました。
+            const reply = await channel.send(`Bread Utility Botの起動準備が完了しました。
             
 このボットは下記の機能を使用できます。
 -------------コマンド系-------------
@@ -58,6 +59,8 @@ ${outputCommandStr}
 
             await clientSrc.user.setPresence({activities:[{name: 'Bread Utility Tool'}], status: "Online"});
             await console.log(`準備が完了しました。起動処理を終了します。`);
+            await setTimeout(1000 * 60 * 30);//30分後削除
+            await reply.delete();
         });
     }
 };

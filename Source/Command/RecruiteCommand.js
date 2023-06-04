@@ -1,4 +1,5 @@
 const {SlashCommandBuilder} = require('discord.js');
+const { setTimeout } = require('node:timers/promises');
 
 /** /hello オンラインのメンバーをメンションします。*/
 module.exports =
@@ -26,11 +27,14 @@ module.exports =
         this.RecruiteData[`${interaction.member.user.username}-${game}`] = Number(num);
         var str = '';
 
-        Object.keys(this.RecruiteData).forEach(usernameANDgamenameKey =>
-        {
+        Object.keys(this.RecruiteData).forEach(usernameANDgamenameKey => {
           str += `・${usernameANDgamenameKey} : ${this.RecruiteData[usernameANDgamenameKey]}人${"\n"}`;
         });
-        await interaction.reply(`@調査隊メンバー ${member.user.username}が${game}で${num}人募集中です。`);
-        await interaction.reply(`現在募集しているゲームと人数一覧を表示します。${"\n"}${str}`);
+
+        const reply = await interaction.reply(`@調査隊メンバー ${member.user.username}が${game}で${num}人募集中です。`);
+        const reply2 = await interaction.followUp(`現在募集しているゲームと人数一覧を表示します。${"\n"}${str}`);
+        await setTimeout(1000 * 60 * 30);//30分後削除
+        await reply.delete();
+        await reply2.delete();
     }
 };

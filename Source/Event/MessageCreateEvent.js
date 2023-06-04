@@ -1,5 +1,4 @@
 const {Client, Events} = require('discord.js');
-
 let clientSrc = undefined;
 let commandsSrc =  {};
 let buttonEventsSrc = {};

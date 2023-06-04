@@ -1,4 +1,5 @@
 const {SlashCommandBuilder} = require('discord.js');
+const { setTimeout } = require('node:timers/promises');
 
 /** /info ギルドの情報を取得します。*/
 module.exports =
@@ -22,14 +23,22 @@ module.exports =
             const tags = members.map(member => member.user.tag);
             result += `タグ${"\n"}`;
             for(const tag of tags) { result += `${tag}${"\n"}` }
-            await interaction.reply(result);
+            const reply = await interaction.reply(result);
+            await setTimeout(1000 * 60 * 30);//30分後削除
+            await reply.delete(); 
         }
         else if(info === '1') {
             const names = members.map(member => member.user.username);
             result += `名前${"\n"}`;
             for(const name of names){ result += `${name}${"\n"}`; }
-            await interaction.reply(result);
+            const reply = await interaction.reply(result);
+            await setTimeout(1000 * 60 * 30);//30分後削除
+            await reply.delete(); 
         }
-        else{ await interaction.reply(`取得したい情報が分かりませんでした。: Target Infomation -> ${info}`); }
+        else{ 
+            const reply = await interaction.reply(`取得したい情報が分かりませんでした。: Target Infomation -> ${info}`);
+            await setTimeout(1000 * 60 * 30);//30分後削除
+            await reply.delete();  
+        }
     }
 };

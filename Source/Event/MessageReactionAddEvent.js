@@ -16,8 +16,7 @@ module.exports =
 
         clientSrc.on(Events.MessageReactionAdd, async (reaction, user) => {
             console.log("call : MessageReactionAddEvent Event");
-            try
-            {
+            try{
                 var txtChannel = clientSrc.channels.cache.get(reaction.message.channelId);
                 var message = await txtChannel.messages.fetch(reaction.message.id);
 
@@ -35,9 +34,8 @@ Message's URL: ${message.url}`);
                     await reply.delete();
                 }
             }
-            catch(error)
-            {
-               txtChannel.send(`Error : ${error}`);
+            catch(error){
+               await txtChannel.send(`Error : ${error}`);
             }
         });
     }

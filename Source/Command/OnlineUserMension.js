@@ -1,4 +1,5 @@
 const {SlashCommandBuilder} = require('discord.js');
+const { setTimeout } = require('node:timers/promises');
 
 /** /hello オンラインのメンバーをメンションします。*/
 module.exports =
@@ -14,9 +15,11 @@ module.exports =
             else { return null; }
         });
 
-        await interaction.reply(
+        const reply = await interaction.reply(
             `現在オンラインのメンバーを全メンションします。${"\n"} 
              ${online.filter(d=>d!=null).join("\n")}`
         );
+        await setTimeout(1000 * 60 * 30);//30分後削除
+        await reply.delete(); 
     }
 };

@@ -5,7 +5,7 @@ const {clientID, guildID, token} = require('./Data/config.json');
 const fs = require('node:fs');
 const commands = [];
 const commandFiles = fs.readdirSync('./Command').filter(file => file.endsWith('.js'));
-const  rest = new REST({version:'10'}).setToken(token);
+const rest = new REST({version:'10'}).setToken(token);
 
 //コマンドモジュール読み込み。
 console.log('Command Fileを解析します。');

@@ -6,6 +6,7 @@ const {
     ActionRowBuilder, 
     ButtonBuilder,
     ButtonStyle} = require('discord.js');
+const { setTimeout } = require('node:timers/promises');
 
 /** /txtdel　選択したメンバーのメッセージを削除するスラッシュコマンド*/
 module.exports =

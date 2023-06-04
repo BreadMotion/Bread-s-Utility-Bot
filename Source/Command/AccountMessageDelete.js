@@ -1,4 +1,5 @@
 const {SlashCommandBuilder} = require('discord.js');
+const { setTimeout } = require('node:timers/promises');
 
 /** /txtdel　選択したメンバーのメッセージを削除するスラッシュコマンド*/
 module.exports =
@@ -32,8 +33,16 @@ module.exports =
         const messages = await channel.messages.fetch({ limit: Number(limit) });
         const filtered = messages.filter(message => message.author.username === user.username);
 
-        try { channel.bulkDelete(filtered); }
-        catch(error) { await interaction.reply(`メッセージの削除に失敗しました。 Error : ${error}`); }
-        await interaction.reply(`${user.tag}のメッセージを全消去しました。理由->${info}`);
+        try { 
+            channel.bulkDelete(filtered);
+            const reply = await interaction.reply(`${user.tag}のメッセージを全消去しました。理由->${info}`);
+            await setTimeout(1000 * 60 * 30);//30分後削除
+            await reply.delete(); 
+        }
+        catch(error) { 
+            const reply = await interaction.reply(`メッセージの削除に失敗しました。 Error : ${error}`);
+            await setTimeout(1000 * 60 * 30);//30分後削除
+            await reply.delete(); 
+        }
     }
 };

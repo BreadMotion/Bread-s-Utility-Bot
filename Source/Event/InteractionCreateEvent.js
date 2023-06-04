@@ -1,6 +1,6 @@
 const {Client, Events} = require('discord.js');
 const VoteButton = require('./Button/VoteButtons');
-const wait = require('util').promisify(setTimeout);
+const { setTimeout } = require('node:timers/promises');
 
 let clientSrc = undefined;
 let commandsSrc =  {};
@@ -16,6 +16,9 @@ module.exports =
         buttonEventsSrc = buttonEvents;
         
         clientSrc.on(Events.InteractionCreate, async interaction => {
+            const config = require('../Data/config.json');
+            const channel = clientSrc.channels.cache.get(config.channelID);
+            
             for(const event in buttonEventsSrc) {
                 await buttonEventsSrc[event].execute(interaction);
             }
@@ -23,10 +26,12 @@ module.exports =
             if(!interaction.isChatInputCommand()) { return; }
             else {
                 const command = commandsSrc[interaction.commandName];
-                try { await command.execute(interaction);  }
+                try { 
+                    await command.execute(interaction);
+                }
                 catch(error) {
-                    await interaction.reply({
-                        content: `コマンド実行時にエラーになりました。\nerrorLog: ${error}`,
+                    await channel.send({
+                        content: `コマンド実行時にエラーになりました。${"\n"}errorLog: ${error}`,
                         ephemeral: true,
                     });
                 }

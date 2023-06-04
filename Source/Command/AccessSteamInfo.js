@@ -16,7 +16,7 @@ module.exports =
     name: 'steam',
     data: new SlashCommandBuilder()
         .setName("steam")
-        .setDescription("SteamAPI Test"),
+        .setDescription("SteamAPI Test(まだ未実装です。)"),
     execute: async function (interaction) {
         const userJson = await fetchJson(`https://api.steampowered.com/ISteamUser/ResolveVanityURL/v0001/?key=${steamWebApiKey}&vanityurl=${nickName}`);
         const steamId = userJson.response.steamId;

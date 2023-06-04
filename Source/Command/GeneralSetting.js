@@ -1,5 +1,6 @@
 const {SlashCommandBuilder} = require('discord.js');
 const fs = require('node:fs');
+const { setTimeout } = require('node:timers/promises');
 
 /** /info このBOTの設定を変更します。*/
 module.exports =
@@ -7,13 +8,12 @@ module.exports =
     name: 'generalSetting',
     data: new SlashCommandBuilder()
         .setName('genel')
-        .setDescription('Botの設定を変更します。')
+        .setDescription('Botの設定を変更します。(このBOTの管理者以外使用しないでください。)')
         .addStringOption(option =>
             option
                .setName('設定')
                .setDescription('設定するコンテンツ')
                .addChoices({name:'テキストチャンネル',value:'0'})
-               .addChoices({name:'名前', value:'1'})
                .setRequired(true))
         .addStringOption(option => 
             option
@@ -33,11 +33,14 @@ module.exports =
                                 token: config.token,
                                 channelID: element
                             }, null, ' '));
-            await interaction.reply(`投稿チャンネルが変更されました。${"\n"}Botを再起動してください。`);
+            const reply = await interaction.reply(`投稿チャンネルが変更されました。${"\n"}Botを再起動してください。`);
+            await setTimeout(1000 * 60 * 30);//30分後削除
+            await reply.delete(); 
         }
-        else if(info === '1') {
-            await interaction.reply(result);
+        else{ 
+            const reply = await interaction.reply(`取得したい情報が分かりませんでした。: Target Infomation -> ${info}`);
+            await setTimeout(1000 * 60 * 30);//30分後削除
+            await reply.delete(); 
         }
-        else{ await interaction.reply(`取得したい情報が分かりませんでした。: Target Infomation -> ${info}`); }
     }
 };
