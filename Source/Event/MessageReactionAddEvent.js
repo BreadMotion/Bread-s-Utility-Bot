@@ -20,7 +20,6 @@ module.exports =
                 var txtChannel = clientSrc.channels.cache.get(reaction.message.channelId);
                 var message = await txtChannel.messages.fetch(reaction.message.id);
 
-                console.log(message);
                 if(message.content.includes('@調査隊メンバー '))
                 {
                     const reply = await txtChannel.send(`
