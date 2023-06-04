@@ -16,7 +16,6 @@ module.exports =
         buttonEventsSrc = buttonEvents;
         
         clientSrc.on(Events.InteractionCreate, async interaction => {
-            console.log('call : InteractionCreate Event');
             for(const event in buttonEventsSrc) {
                 await buttonEventsSrc[event].execute(interaction);
             }
@@ -26,9 +25,8 @@ module.exports =
                 const command = commandsSrc[interaction.commandName];
                 try { await command.execute(interaction);  }
                 catch(error) {
-                    console.error(error);
                     await interaction.reply({
-                        content: 'コマンド実行時にエラーになりました。',
+                        content: `コマンド実行時にエラーになりました。\nerrorLog: ${error}`,
                         ephemeral: true,
                     });
                 }

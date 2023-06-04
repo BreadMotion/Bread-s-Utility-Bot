@@ -15,7 +15,6 @@ module.exports =
         buttonEventsSrc = buttonEvents;
         
         clientSrc.on(Events.VoiceStateUpdate, (oldState, newState) => {
-            console.log("call : voidStateUpdate Event");
             const config = require("../Data/config.json");
             const channel = oldState.member.guild.channels.cache.get(config.channelID);
             const time = new Date();

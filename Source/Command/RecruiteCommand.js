@@ -26,12 +26,11 @@ module.exports =
         this.RecruiteData[`${interaction.member.user.username}-${game}`] = Number(num);
         var str = '';
 
-        Object.keys(this.RecruiteData).forEach(key =>
+        Object.keys(this.RecruiteData).forEach(usernameANDgamenameKey =>
         {
-          str += `・${key} : ${this.RecruiteData[key]}人${"\n"}`;
+          str += `・${usernameANDgamenameKey} : ${this.RecruiteData[usernameANDgamenameKey]}人${"\n"}`;
         });
-        await interaction.reply(
-`${member.user.username}が${game}で${num}人募集中です。${"\n"}
-現在募集しているゲームと人数一覧を表示します。${"\n"}${str}`);
+        await interaction.reply(`@調査隊メンバー ${member.user.username}が${game}で${num}人募集中です。`);
+        await interaction.reply(`現在募集しているゲームと人数一覧を表示します。${"\n"}${str}`);
     }
 };

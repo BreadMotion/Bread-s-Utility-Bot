@@ -16,10 +16,13 @@ module.exports =
         clientSrc.on(Events.GuildMemberAdd, async member => {
             console.log("call : guildMemberAdd Event");
             const {channelID, guildID} = require('../Data/config.json');
-
-            if(guildID !== member.guild.id) { console.log("Failed"); return; }
-            try{ member.guild.channels.cache.get(channelID).send(`${member.user.username}が参加しました。`); }
-            catch(error){ console.log("error : guildMemberAdd Event"); }
+            const channel = member.guild.channels.cache.get(channelID);
+            try{ 
+                channel.send(`${member.user.username}が参加しました。`); 
+            }
+            catch(error){ 
+                console.log(`ErrorLog: ${error}`); 
+            }
         });
     }
 };

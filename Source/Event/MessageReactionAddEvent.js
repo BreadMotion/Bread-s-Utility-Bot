@@ -1,4 +1,5 @@
 const {Client, Events} = require('discord.js');
+const { setTimeout } = require('node:timers/promises');
 
 let clientSrc = undefined;
 let commandsSrc =  {};
@@ -15,18 +16,28 @@ module.exports =
 
         clientSrc.on(Events.MessageReactionAdd, async (reaction, user) => {
             console.log("call : MessageReactionAddEvent Event");
-            console.log(reaction);
-            console.log('-------------------------------------------');
-            console.log(user);
-            try{
-                //commandSrc['Recruite'].RecruiteData.key;
-                channel.send(`At: ${reaction.message.guild}
-                              From: ${`<@${user.id}>`}
-                              To: ${`<@${message.author.mention}>`}
-                              Reaction: ${reaction.emoji.name}`);
+            try
+            {
+                var txtChannel = clientSrc.channels.cache.get(reaction.message.channelId);
+                var message = await txtChannel.messages.fetch(reaction.message.id);
+
+                console.log(message);
+                if(message.content.includes('@調査隊メンバー '))
+                {
+                    const reply = await txtChannel.send(`
+リアクションが発生しました。
+From: ${`<@${user}>`}
+To: ${`<@${message.author}>`}
+Content: ${`<${message.content}>`}
+Reaction: ${`<${reaction.emoji}>`}
+Message's URL: ${message.url}`);
+                    await setTimeout(1000 * 60 * 30);//30分後削除
+                    await reply.delete();
+                }
             }
-            catch(error){
-               console.log("error : MessageReactionAddEvent Event"); 
+            catch(error)
+            {
+               txtChannel.send(`Error : ${error}`);
             }
         });
     }

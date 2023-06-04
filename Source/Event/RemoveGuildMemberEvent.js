@@ -14,15 +14,14 @@ module.exports =
         buttonEventsSrc = buttonEvents;
 
         clientSrc.on(Events.GuildMemberRemove, async member => {
-            console.log("call : guildMemberRemove Event");
-            const {channelID, guildID} = require('../Data/config.json');
-            
-            if(guildID !== member.guild.id)  { 
-                console.log("Faled"); 
-                return; 
+            const {channelID} = require('../Data/config.json');
+            const channel = member.guild.channels.cache.get(channelID); 
+            try {
+                channel.send(`${member.user.username}がチャンネルから退場しました。`);  
             }
-            try { member.guild.channels.cache.get(channelID).send(`${member.user.username}？どした？話きこか？`);  }
-            catch(error) { console.log("error : guildMemberRemove Event");  }
+            catch(error) { 
+                channel.send(`error Log: ${error}`);
+            }
         });
     }
 };

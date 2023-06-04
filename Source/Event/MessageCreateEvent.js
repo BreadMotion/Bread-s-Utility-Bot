@@ -14,17 +14,16 @@ module.exports =
         buttonEventsSrc = buttonEvents;
 
         clientSrc.on(Events.MessageCreate, async message => {
-            console.log("call : MessageCreate Event");
-            try{
+            /*try{
                 if(message.content === 'hello')
                 {
                   const reply = await message.channel.send('hi!');
                   await reply.react('👋');
                 }
             }
-            catch(error){
-               console.log("error : MessageCreate Event"); 
-            }
+            catch(error) { 
+                channel.send(`error Log: ${error}`);
+            }*/
         });
     }
 };
