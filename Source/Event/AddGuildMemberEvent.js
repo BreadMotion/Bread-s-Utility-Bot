@@ -24,7 +24,7 @@ module.exports =
                 await reply.delete();
             }
             catch(error){ 
-                await txtChannel.send(`Error : ${error}`);
+                await txtChannel.send(`<@&1114914631153111081> Error : ${error}`);
             }
         });
     }

@@ -16,6 +16,8 @@ module.exports =
                .addChoices({name:'名前', value:'1'})
                .setRequired(true)),
     execute: async function(interaction){
+        try
+        {
         const info = interaction.options.getString('情報') || 'NONE';
         const members = await interaction.member.guild.members.fetch();
         let result = `このサーバーの全メンバーの`;
@@ -40,5 +42,10 @@ module.exports =
             await setTimeout(1000 * 60 * 30);//30分後削除
             await reply.delete();  
         }
+    }
+    catch(error)
+    {
+        interaction.channel.send(`<@&1114914631153111081> Error : ${error}`);
+    }
     }
 };

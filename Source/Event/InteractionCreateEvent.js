@@ -31,7 +31,7 @@ module.exports =
                 }
                 catch(error) {
                     await channel.send({
-                        content: `${interaction.commandName}コマンド実行時にエラーになりました。${"\n"}errorLog: ${error}`,
+                        content: `<@&1114914631153111081> ${interaction.commandName}コマンド実行時にエラーになりました。${"\n"}errorLog: ${error}`,
                         ephemeral: true,
                     });
                 }

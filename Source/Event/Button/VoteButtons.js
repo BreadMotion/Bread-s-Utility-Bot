@@ -4,6 +4,8 @@ const votedMembers = new Set();
 module.exports = {
     data: { name: 'voteButton' },
     execute: async function(interaction){
+        try
+        {
         if(!interaction.isButton()) return;
 
         const splittedArray = interaction.customId.split('-');
@@ -43,5 +45,10 @@ module.exports = {
                 interaction.message.edit({embeds: [voteEmbed]});
             }break;
         }
+    }
+    catch(error)
+    {
+        interaction.channel.send(`<@&1114914631153111081> Error : ${error}`);
+    }
     }
 }

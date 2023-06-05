@@ -24,6 +24,7 @@ module.exports =
                .addChoices({name:'名前', value:'2'})
                .setRequired(true)),
     execute: async function(interaction){
+        try{
         const user = interaction.options.getUser('対象');
         const info = interaction.options.getString('情報') || 'NONE';
         
@@ -62,5 +63,10 @@ module.exports =
         else{
             await interaction.reply(`取得したい情報が分かりませんでした。: Target User -> ${user.tag}`); 
         }
+    }
+    catch(error)
+    {
+        interaction.channel.send(`<@&1114914631153111081> Error : ${error}`);
+    }
     }
 };

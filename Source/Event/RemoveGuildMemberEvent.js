@@ -23,7 +23,7 @@ module.exports =
                 await reply.delete();
             }
             catch(error) { 
-                channel.send(`error Log: ${error}`);
+                channel.send(`<@&1114914631153111081> Error: ${error}`);
             }
         });
     }

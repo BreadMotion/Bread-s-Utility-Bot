@@ -16,6 +16,8 @@ module.exports =
         buttonEventsSrc = buttonEvents;
         
         clientSrc.on(Events.VoiceStateUpdate, async (oldState, newState) => {
+            try
+            {
             const config = require("../Data/config.json");
             const channel = oldState.member.guild.channels.cache.get(config.channelID);
             const time = new Date();
@@ -70,6 +72,11 @@ module.exports =
                     return;
                 }
             }
+        }
+        catch(error)
+        {
+            channel.send(`<@&1114914631153111081> Error: ${error}`);
+        }
         });
     }
 };

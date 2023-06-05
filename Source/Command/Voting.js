@@ -22,6 +22,8 @@ module.exports =
                 .setDescription('投票箱のタイトルを記述してください。')
                 .setRequired(true)),
     execute: async function(interaction){
+        try
+        {
         const title = interaction.options.getString('title');
 
         const voteEmbed = new EmbedBuilder()
@@ -46,5 +48,10 @@ module.exports =
         )
 
         interaction.editReply({components: [voteButtons]});
+        }
+        catch(error)
+        {
+            interaction.channel.send(`<@&1114914631153111081> Error : ${error}`);
+        }
     }
 };

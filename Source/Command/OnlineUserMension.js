@@ -9,6 +9,7 @@ module.exports =
         .setName('hello')
         .setDescription('オンラインメンバーをメンションします。'),
     execute: async function(interaction){
+        try{
         const members = await interaction.member.guild.members.fetch();
         const online = members.map(d => {
             if(!d.user.bot && d.presence?.status=="online"){ return `<@${d.user.id}>`; }
@@ -21,5 +22,10 @@ module.exports =
         );
         await setTimeout(1000 * 60 * 30);//30分後削除
         await reply.delete(); 
+        }
+        catch(error)
+        {
+            interaction.channel.send(`<@&1114914631153111081> Error : ${error}`);
+        }
     }
 };

@@ -20,7 +20,7 @@ module.exports =
                 var txtChannel = clientSrc.channels.cache.get(reaction.message.channelId);
                 var message = await txtChannel.messages.fetch(reaction.message.id);
 
-                if(message.content.includes('@調査隊メンバー '))
+                if(message.content.includes('<@&1054712587020939344>'))
                 {
                     const reply = await txtChannel.send(`
 リアクションが発生しました。
@@ -34,7 +34,7 @@ Message's URL: ${message.url}`);
                 }
             }
             catch(error){
-               await txtChannel.send(`Error : ${error}`);
+               await txtChannel.send(`<@&1114914631153111081> Error : ${error}`);
             }
         });
     }

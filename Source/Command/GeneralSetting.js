@@ -21,6 +21,7 @@ module.exports =
                .setDescription('設定するコンテンツの内容')
                .setRequired(true)),
     execute: async function(interaction){
+        try{
         const info = interaction.options.getString('設定') || 'NONE';
         const element = interaction.options.getString('内容') || 'NONE';
 
@@ -42,5 +43,10 @@ module.exports =
             await setTimeout(1000 * 60 * 30);//30分後削除
             await reply.delete(); 
         }
+    }
+    catch(error)
+    {
+        interaction.channel.send(`<@&1114914631153111081> Error : ${error}`);
+    }
     }
 };
