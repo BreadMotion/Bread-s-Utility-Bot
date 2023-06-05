@@ -21,6 +21,7 @@ module.exports =
                .setDescription('設定するコンテンツの内容')
                .setRequired(true)),
     execute: async function(interaction){
+        return;
         try{
         const info = interaction.options.getString('設定') || 'NONE';
         const element = interaction.options.getString('内容') || 'NONE';
