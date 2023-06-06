@@ -40,7 +40,7 @@ module.exports =
             console.log('コマンドの登録作業終了しました。');
         
             //起動したことをチャンネルに知らせます。
-            const reply = await channel.send(`Bread Utility Botの起動準備が完了しました。
+            /*const reply = await channel.send(`Bread Utility Botの起動準備が完了しました。
             
 このボットは下記の機能を使用できます。
 -------------コマンド系-------------
@@ -55,7 +55,7 @@ ${outputCommandStr}
 -----------------------------------
 
 コマンド系は【/(コマンド名) (各コマンドのオプション)】でご利用できます。
-イベント系はそれぞれのイベントの条件が満たされた時に起動します。`);
+イベント系はそれぞれのイベントの条件が満たされた時に起動します。`);*/
 
             await clientSrc.user.setPresence({activities:[{name: 'Bread Utility Tool'}], status: "Online"});
             await console.log(`準備が完了しました。起動処理を終了します。`);
