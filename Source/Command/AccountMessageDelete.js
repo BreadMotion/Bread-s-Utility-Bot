@@ -29,8 +29,7 @@ module.exports =
             const limit = interaction.options.getString('limit');
             const info = interaction.options.getString('reason') || 'NONE';
             
-            const {channelID} = require('../Data/config.json');
-            const channel = interaction.member.guild.channels.cache.get(channelID);
+            const channel = interaction.channel;
             const messages = await channel.messages.fetch({ limit: Number(limit) });
             const filtered = messages.filter(message => message.author.username === user.username);
 

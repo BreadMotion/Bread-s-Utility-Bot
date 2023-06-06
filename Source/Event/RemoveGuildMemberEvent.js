@@ -17,13 +17,15 @@ module.exports =
         clientSrc.on(Events.GuildMemberRemove, async member => {
             const config = require("../Data/config.json");
             const channel = oldState.member.guild.channels.cache.get(config.TokeChannelID);
+            const botChannel = clientSrc.channels.cache.get(config.BotChannelID);
+
             try {
                 const reply = await channel.send(`${member.user.username}がチャンネルから退場しました。`); 
                 await setTimeout(1000 * 60 * 5);//5分後削除
                 await reply.delete();
             }
             catch(error) { 
-                channel.send(`<@&1114914631153111081> Error: ${error}`);
+                botChannel.send(`<@&1114914631153111081> Error: ${error}`);
             }
         });
     }

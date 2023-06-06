@@ -16,8 +16,8 @@ module.exports =
 
         clientSrc.once(Events.ClientReady, async message => {
             console.log('起動処理を開始します。');
-            const {channelID, guildID} = require('../Data/config.json');
-            const channel = clientSrc.channels.cache.get(channelID);
+            const config = require('../Data/config.json');
+            const channel = clientSrc.channels.cache.get(config.TokeChannelID);
 
             let index = 0;
             const data = [];
@@ -36,7 +36,7 @@ module.exports =
                 }
                 index++;
             }
-            await clientSrc.application.commands.set(data, guildID);
+            await clientSrc.application.commands.set(data, config.guildID);
             console.log('コマンドの登録作業終了しました。');
         
             //起動したことをチャンネルに知らせます。
@@ -59,8 +59,8 @@ ${outputCommandStr}
 
             await clientSrc.user.setPresence({activities:[{name: 'Bread Utility Tool'}], status: "Online"});
             await console.log(`準備が完了しました。起動処理を終了します。`);
-            await setTimeout(1000 * 60 * 30);//30分後削除
-            await reply.delete();
+            //await setTimeout(1000 * 60 * 30);//30分後削除
+            //await reply.delete();
         });
     }
 };

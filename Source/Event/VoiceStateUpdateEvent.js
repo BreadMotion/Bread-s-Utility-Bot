@@ -17,22 +17,23 @@ module.exports =
         
         clientSrc.on(Events.VoiceStateUpdate, async (oldState, newState) => {
             const config = require("../Data/config.json");
-            const channel = oldState.member.guild.channels.cache.get(config.BotChannelID);
+            const channel = clientSrc.channels.cache.get(config.channelID);
+            const botChannel = clientSrc.channels.cache.get(config.BotChannelID);
+
             try
             {
                 const time = new Date();
-
-            if(oldState.channelId === null && newState.channelId !== null)
-            {
-                if(oldState.member.nickname !== null)
+                if(oldState.channelId === null && newState.channelId !== null)
                 {
-                    var userName = oldState.member.user.username;
-                    memberTimeAry.push({userName, time});
-                    const reply = await channel.send(`${oldState.member.nickname}が入室しました。`);
-                    await setTimeout(1000 * 60 * 5);//5分後削除
-                    await reply.delete();
-                    return;
-                }
+                    if(oldState.member.nickname !== null)
+                    {
+                        var userName = oldState.member.user.username;
+                        memberTimeAry.push({userName, time});
+                        const reply = await channel.send(`${oldState.member.nickname}が入室しました。`); 
+                        await setTimeout(1000 * 60 * 5);//5分後削除
+                        await reply.delete();
+                        return;
+                    }
                 else
                 {
                     var userName = oldState.member.user.username;
@@ -75,7 +76,7 @@ module.exports =
         }
         catch(error)
         {
-            channel.send(`<@&1114914631153111081> Error: ${error}`);
+            botChannel.send(`<@&1114914631153111081> Error: ${error}`);
         }
         });
     }

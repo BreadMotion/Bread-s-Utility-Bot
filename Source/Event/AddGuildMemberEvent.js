@@ -17,14 +17,15 @@ module.exports =
         clientSrc.on(Events.GuildMemberAdd, async member => {
             console.log("call : guildMemberAdd Event");
             const config = require('../Data/config.json');
-            const channel = member.guild.channels.cache.get(config.TokeChannelID);
+            const channel = clientSrc.channels.cache.get(config.TokeChannelID);
+            const botChannel = clientSrc.channels.cache.get(config.BotChannelID);
             try{ 
                 const reply = await channel.send(`${member.user.username}が参加しました。`); 
                 await setTimeout(1000 * 60 * 5);//5分後削除
                 await reply.delete();
             }
             catch(error){ 
-                await txtChannel.send(`<@&1114914631153111081> Error : ${error}`);
+                await botChannel.send(`<@&1114914631153111081> Error : ${error}`);
             }
         });
     }

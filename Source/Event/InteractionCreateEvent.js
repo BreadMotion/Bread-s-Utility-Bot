@@ -17,8 +17,8 @@ module.exports =
         
         clientSrc.on(Events.InteractionCreate, async interaction => {
             const config = require('../Data/config.json');
-            const channel = clientSrc.channels.cache.get(config.BotChannelID);
-            
+            const botChannel = clientSrc.channels.cache.get(config.BotChannelID);
+
             for(const event in buttonEventsSrc) {
                 await buttonEventsSrc[event].execute(interaction);
             }
@@ -30,7 +30,7 @@ module.exports =
                     await command.execute(interaction);
                 }
                 catch(error) {
-                    await channel.send({
+                    await botChannel.send({
                         content: `<@&1114914631153111081> ${interaction.commandName}コマンド実行時にエラーになりました。${"\n"}errorLog: ${error}`,
                         ephemeral: true,
                     });
