@@ -29,7 +29,7 @@ To: ${`<@${message.author}>`}
 Content: ${`<${message.content.replace('<@&1054712587020939344>', '@調査隊メンバー')}>`}
 Reaction: ${`<${reaction.emoji}>`}
 Message's URL: ${message.url}`);
-                    await setTimeout(1000 * 60 * 30);//30分後削除
+                    await setTimeout(1000 * 60 * 5);//5分後削除
                     await reply.delete();
                 }
             }

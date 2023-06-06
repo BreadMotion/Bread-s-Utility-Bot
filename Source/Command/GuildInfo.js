@@ -26,7 +26,7 @@ module.exports =
             result += `タグ${"\n"}`;
             for(const tag of tags) { result += `${tag}${"\n"}` }
             const reply = await interaction.reply(result);
-            await setTimeout(1000 * 60 * 30);//30分後削除
+            await setTimeout(1000 * 60 * 5);//5分後削除
             await reply.delete(); 
         }
         else if(info === '1') {
@@ -34,12 +34,12 @@ module.exports =
             result += `名前${"\n"}`;
             for(const name of names){ result += `${name}${"\n"}`; }
             const reply = await interaction.reply(result);
-            await setTimeout(1000 * 60 * 30);//30分後削除
+            await setTimeout(1000 * 60 * 5);//5分後削除
             await reply.delete(); 
         }
         else{ 
             const reply = await interaction.reply(`取得したい情報が分かりませんでした。: Target Infomation -> ${info}`);
-            await setTimeout(1000 * 60 * 30);//30分後削除
+            await setTimeout(1000 * 60 * 5);//5分後削除
             await reply.delete();  
         }
     }

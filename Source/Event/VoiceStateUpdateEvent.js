@@ -29,7 +29,7 @@ module.exports =
                     var userName = oldState.member.user.username;
                     memberTimeAry.push({userName, time});
                     const reply = await channel.send(`${oldState.member.nickname}が入室しました。`);
-                    await setTimeout(1000 * 60 * 30);//30分後削除
+                    await setTimeout(1000 * 60 * 5);//5分後削除
                     await reply.delete();
                     return;
                 }
@@ -38,7 +38,7 @@ module.exports =
                     var userName = oldState.member.user.username;
                     memberTimeAry.push({userName, time});
                     const reply = await channel.send(`${oldState.member.user.tag.slice(0, -5)}さん入室しました。`);
-                    await setTimeout(1000 * 60 * 30);//30分後削除
+                    await setTimeout(1000 * 60 * 5);//5分後削除
                     await reply.delete();
                     return;
                 }
@@ -53,7 +53,7 @@ module.exports =
                     var nowTime = new Date;
                     const reply = channel.send(`${newState.member.nickname}さんが退出しました。`);
                     const reply2 = channel.send(`${(nowTime.getTime() - filters[0].time.getTime()) / (1000 * 60)}分作業していました。(結構誤差ある。)`);
-                    await setTimeout(1000 * 60 * 30);//30分後削除
+                    await setTimeout(1000 * 60 * 5);//5分後削除
                     await reply.delete();
                     await reply2.delete();
                     return;
@@ -66,7 +66,7 @@ module.exports =
                     var nowTime = new Date;
                     const reply = channel.send(`${newState.member.user.tag.slice(0, -5)}さんが退出しました。`);
                     const reply2 = channel.send(`${(nowTime.getTime() - filters[0].time.getTime()) / (1000 * 60)}分作業していました。(結構誤差ある。)`);
-                    await setTimeout(1000 * 60 * 30);//30分後削除
+                    await setTimeout(1000 * 60 * 5);//5分後削除
                     await reply.delete();
                     await reply2.delete();
                     return;

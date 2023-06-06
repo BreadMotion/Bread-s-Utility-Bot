@@ -19,7 +19,7 @@ module.exports =
             const channel = member.guild.channels.cache.get(channelID); 
             try {
                 const reply = await channel.send(`${member.user.username}がチャンネルから退場しました。`); 
-                await setTimeout(1000 * 60 * 30);//30分後削除
+                await setTimeout(1000 * 60 * 5);//5分後削除
                 await reply.delete();
             }
             catch(error) { 

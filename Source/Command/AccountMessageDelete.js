@@ -36,12 +36,12 @@ module.exports =
 
             channel.bulkDelete(filtered);
             const reply = await interaction.reply(`${user.tag}のメッセージを全消去しました。理由->${info}`);
-            await setTimeout(1000 * 60 * 30);//30分後削除
+            await setTimeout(1000 * 60 * 5);//5分後削除
             await reply.delete(); 
         }
         catch(error) { 
             const reply = await interaction.reply(`<@&1114914631153111081> メッセージの削除に失敗しました。 Error : ${error}`);
-            await setTimeout(1000 * 60 * 30);//30分後削除
+            await setTimeout(1000 * 60 * 5);//5分後削除
             await reply.delete(); 
         }
     }
