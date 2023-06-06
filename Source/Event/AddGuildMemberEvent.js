@@ -16,8 +16,8 @@ module.exports =
 
         clientSrc.on(Events.GuildMemberAdd, async member => {
             console.log("call : guildMemberAdd Event");
-            const {channelID} = require('../Data/config.json');
-            const channel = member.guild.channels.cache.get(channelID);
+            const config = require('../Data/config.json');
+            const channel = member.guild.channels.cache.get(config.TokeChannelID);
             try{ 
                 const reply = await channel.send(`${member.user.username}が参加しました。`); 
                 await setTimeout(1000 * 60 * 5);//5分後削除

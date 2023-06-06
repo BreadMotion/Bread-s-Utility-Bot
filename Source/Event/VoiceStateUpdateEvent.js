@@ -17,7 +17,7 @@ module.exports =
         
         clientSrc.on(Events.VoiceStateUpdate, async (oldState, newState) => {
             const config = require("../Data/config.json");
-            const channel = oldState.member.guild.channels.cache.get(config.channelID);
+            const channel = oldState.member.guild.channels.cache.get(config.BotChannelID);
             try
             {
                 const time = new Date();

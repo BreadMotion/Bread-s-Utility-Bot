@@ -17,7 +17,7 @@ module.exports =
         
         clientSrc.on(Events.InteractionCreate, async interaction => {
             const config = require('../Data/config.json');
-            const channel = clientSrc.channels.cache.get(config.channelID);
+            const channel = clientSrc.channels.cache.get(config.BotChannelID);
             
             for(const event in buttonEventsSrc) {
                 await buttonEventsSrc[event].execute(interaction);

@@ -15,8 +15,8 @@ module.exports =
         buttonEventsSrc = buttonEvents;
 
         clientSrc.on(Events.GuildMemberRemove, async member => {
-            const {channelID} = require('../Data/config.json');
-            const channel = member.guild.channels.cache.get(channelID); 
+            const config = require("../Data/config.json");
+            const channel = oldState.member.guild.channels.cache.get(config.TokeChannelID);
             try {
                 const reply = await channel.send(`${member.user.username}がチャンネルから退場しました。`); 
                 await setTimeout(1000 * 60 * 5);//5分後削除
