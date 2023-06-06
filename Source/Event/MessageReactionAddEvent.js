@@ -16,8 +16,8 @@ module.exports =
 
         clientSrc.on(Events.MessageReactionAdd, async (reaction, user) => {
             console.log("call : MessageReactionAddEvent Event");
+            var txtChannel = clientSrc.channels.cache.get(reaction.message.channelId);
             try{
-                var txtChannel = clientSrc.channels.cache.get(reaction.message.channelId);
                 var message = await txtChannel.messages.fetch(reaction.message.id);
 
                 if(message.content.includes('<@&1054712587020939344>'))

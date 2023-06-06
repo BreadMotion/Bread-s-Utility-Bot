@@ -16,11 +16,11 @@ module.exports =
         buttonEventsSrc = buttonEvents;
         
         clientSrc.on(Events.VoiceStateUpdate, async (oldState, newState) => {
-            try
-            {
             const config = require("../Data/config.json");
             const channel = oldState.member.guild.channels.cache.get(config.channelID);
-            const time = new Date();
+            try
+            {
+                const time = new Date();
 
             if(oldState.channelId === null && newState.channelId !== null)
             {
