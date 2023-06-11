@@ -36,7 +36,7 @@ module.exports =
 
         const reply = await interaction.reply(`<@&1054712587020939344> ${member.user.username}が${game}で${num}人募集中です。`);
         const reply2 = await interaction.followUp(`現在募集しているゲームと人数一覧を表示します。${"\n"}${str}`);
-        await setTimeout(1000 * 60 * 5);//5分後削除
+        await setTimeout(1000 * 60 * 45);//5分後削除
         await reply.delete();
         await reply2.delete();
 
