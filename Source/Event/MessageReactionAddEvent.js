@@ -22,10 +22,6 @@ module.exports =
 
             try{
                 var message = await txtChannel.messages.fetch(reaction.message.id);
-                //const users = await clientSrc.users.fetch({ limit: 100 });
-                //RecruiteData.filter(user => user.username === 
-                //console.log('fetch Finish');
-
                 if(message.content.includes('<@&1054712587020939344>'))
                 {
                     if(message.author.id === `1115265100249563158`)
@@ -43,7 +39,7 @@ Message's URL: ${message.url}`);
                     }
                     else
                     {//リアクション対象がユーザーだった時
-                        const reply = await txtChannel.send(`${"\n"}${`<${user}>`} -> ${`<${message.user.username}>`} : ${`<${reaction.emoji}>`}
+                        const reply = await txtChannel.send(`${"\n"}${`<${user}>`} -> ${`<@${message.author.id}>`} : ${`<${reaction.emoji}>`}
 Message's URL: ${message.url}`);
                         await setTimeout(1000 * 60 * 5);//5分後削除
                         await reply.delete();
