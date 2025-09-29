@@ -1,32 +1,28 @@
-const {Client, Events} = require('discord.js');
-const { setTimeout } = require('node:timers/promises');
+const { Client, Events } = require("discord.js");
+const { setTimeout } = require("node:timers/promises");
 
 let clientSrc = undefined;
-let commandsSrc =  {};
+let commandsSrc = {};
 let buttonEventsSrc = {};
 
 //メンバーが増えたら発火する。
-module.exports = 
-{
-    data: { name: 'guildMemberAdd' },
-    execute: function(client,commands,buttonEvents){
-        clientSrc = client;
-        commandsSrc = commands;
-        buttonEventsSrc = buttonEvents;
+module.exports = {
+  data: { name: "guildMemberAdd" },
+  execute: function (client, commands, buttonEvents) {
+    clientSrc = client;
+    commandsSrc = commands;
+    buttonEventsSrc = buttonEvents;
 
-        clientSrc.on(Events.GuildMemberAdd, async member => {
-            console.log("call : guildMemberAdd Event");
-            const config = require('../Data/config.json');
-            const channel = clientSrc.channels.cache.get(config.TokeChannelID);
-            const botChannel = clientSrc.channels.cache.get(config.BotChannelID);
-            try{ 
-                const reply = await channel.send(`${member.user.username}が参加しました。`); 
-                await setTimeout(1000 * 60 * 5);//5分後削除
-                await reply.delete();
-            }
-            catch(error){ 
-                await botChannel.send(`<@&1114914631153111081> Error : ${error}`);
-            }
-        });
-    }
+    clientSrc.on(Events.GuildMemberAdd, async (member) => {
+      console.log("call : guildMemberAdd Event");
+      const config = require("../Data/config.json");
+      const channel = clientSrc.channels.cache.get(config.TokeChannelID);
+      const botChannel = clientSrc.channels.cache.get(config.BotChannelID);
+      const reply = await channel.send(
+        `${member.user.username}が参加しました。`
+      );
+      await setTimeout(1000 * 60 * 5); //5分後削除
+      await reply.delete();
+    });
+  },
 };

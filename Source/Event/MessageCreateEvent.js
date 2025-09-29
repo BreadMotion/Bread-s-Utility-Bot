@@ -1,19 +1,18 @@
-const {Client, Events} = require('discord.js');
+const { Client, Events } = require("discord.js");
 let clientSrc = undefined;
-let commandsSrc =  {};
+let commandsSrc = {};
 let buttonEventsSrc = {};
 
 //メンバーが増えたら発火する。
-module.exports = 
-{
-    data: { name: 'messageCreateEvent' },
-    execute: function(client,commands,buttonEvents){
-        clientSrc = client;
-        commandsSrc = commands;
-        buttonEventsSrc = buttonEvents;
+module.exports = {
+  data: { name: "messageCreateEvent" },
+  execute: function (client, commands, buttonEvents) {
+    clientSrc = client;
+    commandsSrc = commands;
+    buttonEventsSrc = buttonEvents;
 
-        clientSrc.on(Events.MessageCreate, async message => {
-            /*try{
+    clientSrc.on(Events.MessageCreate, async (message) => {
+      /*try{
                 if(message.content === 'hello')
                 {
                   const reply = await message.channel.send('hi!');
@@ -23,6 +22,6 @@ module.exports =
             catch(error) { 
                 channel.send(`error Log: ${error}`);
             }*/
-        });
-    }
+    });
+  },
 };
