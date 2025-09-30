@@ -1,4 +1,4 @@
-const { Client, Events } = require("discord.js");
+const { Events } = require("discord.js");
 const { setTimeout } = require("node:timers/promises");
 
 let clientSrc = undefined;
@@ -7,7 +7,7 @@ let buttonEventsSrc = {};
 
 //メンバーが増えたら発火する。
 module.exports = {
-  data: { name: "guildMemberAdd" },
+  data: { name: "GuildMemberAdd" },
   execute: function (client, commands, buttonEvents) {
     clientSrc = client;
     commandsSrc = commands;
@@ -17,7 +17,6 @@ module.exports = {
       console.log("call : guildMemberAdd Event");
       const config = require("../Data/config.json");
       const channel = clientSrc.channels.cache.get(config.TokeChannelID);
-      const botChannel = clientSrc.channels.cache.get(config.BotChannelID);
       const reply = await channel.send(
         `${member.user.username}が参加しました。`
       );

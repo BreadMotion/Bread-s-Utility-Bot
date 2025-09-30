@@ -1,4 +1,4 @@
-const { Events, GatewayIntentBits } = require("discord.js");
+const { Events } = require("discord.js");
 const { setTimeout } = require("node:timers/promises");
 
 let clientSrc = undefined;
@@ -18,7 +18,6 @@ module.exports = {
       const channel = oldState.member.guild.channels.cache.get(
         config.TokeChannelID
       );
-      const botChannel = clientSrc.channels.cache.get(config.BotChannelID);
       const reply = await channel.send(
         `${member.user.username}がチャンネルから退場しました。`
       );

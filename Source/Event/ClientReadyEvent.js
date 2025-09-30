@@ -1,11 +1,10 @@
-const { Client, Events } = require("discord.js");
-const { setTimeout } = require("node:timers/promises");
+const { Events } = require("discord.js");
 
 let clientSrc = undefined;
 let commandsSrc = {};
 let buttonEventsSrc = {};
 
-//起動処理イベント
+// 起動処理イベント
 module.exports = {
   data: { name: "clientReady" },
   execute: function (client, commands, buttonEvents) {
@@ -37,9 +36,10 @@ module.exports = {
       await clientSrc.application.commands.set(data, config.guildID);
       console.log("コマンドの登録作業終了しました。");
       await clientSrc.user.setPresence({
-        activities: [{ name: "Bread Utility Tool" }],
+        activities: [{ name: "開発" }],
         status: "Online",
       });
+      console.log("起動しました。");
     });
   },
 };

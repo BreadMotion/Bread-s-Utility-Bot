@@ -1,6 +1,4 @@
-const { Client, Events } = require("discord.js");
-const VoteButton = require("./Button/VoteButtons");
-const { setTimeout } = require("node:timers/promises");
+const { Events } = require("discord.js");
 
 let clientSrc = undefined;
 let commandsSrc = {};
@@ -16,7 +14,7 @@ module.exports = {
 
     clientSrc.on(Events.InteractionCreate, async (interaction) => {
       const config = require("../Data/config.json");
-      const botChannel = clientSrc.channels.cache.get(config.BotChannelID);
+      const botChannel = clientSrc.channels.cache.get(config.TokeChannelID);
       for (const event in buttonEventsSrc) {
         await buttonEventsSrc[event].execute(interaction);
       }

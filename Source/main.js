@@ -1,8 +1,25 @@
 const { Client, GatewayIntentBits } = require("discord.js");
 const { token } = require("./Data/config.json");
+
 const client = new Client({
-  intents: [Object.values(GatewayIntentBits).filter(Number.isInteger)],
-  partials: [1, 2, 3, 4, 5, 6],
+  intents: [
+    GatewayIntentBits.Guilds,
+    GatewayIntentBits.GuildMessages,
+    GatewayIntentBits.MessageContent,
+    GatewayIntentBits.GuildMembers,
+    GatewayIntentBits.GuildModeration,
+    GatewayIntentBits.GuildPresences,
+    GatewayIntentBits.GuildWebhooks,
+    GatewayIntentBits.GuildInvites,
+    GatewayIntentBits.GuildVoiceStates,
+    GatewayIntentBits.GuildEmojisAndStickers,
+    GatewayIntentBits.GuildIntegrations,
+    GatewayIntentBits.AutoModerationConfiguration,
+    GatewayIntentBits.AutoModerationExecution,
+    GatewayIntentBits.GuildMessageReactions,
+    GatewayIntentBits.GuildMessageTyping,
+    GatewayIntentBits.GuildScheduledEvents,
+  ],
 });
 
 //ファイルシステムを使用して./Commandにあるソースからモジュールをロードします。
@@ -40,14 +57,13 @@ for (const event in events) {
   events[event].execute(client, commands, buttonEvents);
   console.log(`Registed : ${event}`);
 }
+console.log("-------------------------------------------------");
 
 //login処理。
 (async () => {
-  console.log("Begin Login");
   try {
     client.login(token);
   } catch (error) {
     console.log(error);
   }
-  console.log("End Login");
 })();
