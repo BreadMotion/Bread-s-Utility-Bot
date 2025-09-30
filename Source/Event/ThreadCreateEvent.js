@@ -1,10 +1,9 @@
-const { Client, Events } = require("discord.js");
+const { Client, EmbedBuilder, Events } = require("discord.js");
 
 let clientSrc = undefined;
 let commandsSrc = {};
 let buttonEventsSrc = {};
 
-// TODO: イベント検知していない
 module.exports = {
   data: { name: "ThreadCreateEvent" },
   execute: function (client, commands, buttonEvents) {
@@ -17,15 +16,18 @@ module.exports = {
       const config = require("../Data/config.json");
       const user = await clientSrc.users.fetch(thread.ownerId);
       const channel = clientSrc.channels.cache.get(config.TokeChannelID);
-      console.log(user);
-      const reply = await channel.send(
-        [
-          `新規スレッドが投稿されました！`,
-          `投稿者 : ${user}`,
-          `フォーラムch : ${thread.parent.name}`,
-          `タイトル : ${thread.name}`,
-        ].join("\n")
-      );
+      const embed = new EmbedBuilder()
+        .setTitle("フォーラム通知")
+        .setDescription("新規スレッドが投稿されました！" + "👏")
+        .setFields([
+          { name: "タイトル", value: `${thread}` },
+          { name: "投稿者", value: `${user}`, inline: true },
+          { name: "チャンネル", value: `${thread.parent}`, inline: true },
+        ])
+        .setFooter({ text: "Call ThreadCreateEvent" })
+        .setTimestamp()
+        .setColor("#2bff67");
+      const reply = await channel.send({ embeds: [embed] });
       await reply.react("👀");
     });
   },

@@ -1,4 +1,4 @@
-const { AuditLogEvent, Client, Events } = require("discord.js");
+const { EmbedBuilder, AuditLogEvent, Client, Events } = require("discord.js");
 
 let clientSrc = undefined;
 let commandsSrc = {};
@@ -40,15 +40,19 @@ module.exports = {
       });
 
       const log = fetchedLogs.entries.first();
-      const reply = await channel.send(
-        [
-          reportContent,
-          `投稿者 : ${user}`,
-          `更新者 : ${log.executor}`,
-          `フォーラムch : ${newThread.parent.name}`,
-          `タイトル : ${newThread.name}`,
-        ].join("\n")
-      );
+      const embed = new EmbedBuilder()
+        .setTitle("フォーラム通知")
+        .setDescription(reportContent + "👏")
+        .setFields([
+          { name: "タイトル", value: `${newThread}`, intline: true },
+          { name: "投稿者", value: `${user}`, inline: true },
+          { name: "更新者", value: `${log.executor}`, intline: true },
+          { name: "チャンネル", value: `${newThread.parent}`, intline: true },
+        ])
+        .setFooter({ text: "Call ThreadUpdateEvent" })
+        .setTimestamp()
+        .setColor("#2bff67");
+      const reply = await channel.send({ embeds: [embed] });
       await reply.react("👀");
     });
   },
