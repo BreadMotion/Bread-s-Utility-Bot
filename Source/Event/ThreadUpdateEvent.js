@@ -4,7 +4,6 @@ let clientSrc = undefined;
 let commandsSrc = {};
 let buttonEventsSrc = {};
 
-// TODO: イベント検知していない
 module.exports = {
   data: { name: "ThreadUpdateEvent" },
   execute: function (client, commands, buttonEvents) {
