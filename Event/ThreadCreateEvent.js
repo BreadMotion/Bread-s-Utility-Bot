@@ -1,21 +1,17 @@
 const { Client, EmbedBuilder, Events } = require("discord.js");
-
-let clientSrc = undefined;
-let commandsSrc = {};
-let buttonEventsSrc = {};
+const config = require("../Data/config.json");
+let botManager = null;
 
 module.exports = {
   data: { name: "ThreadCreateEvent" },
-  execute: function (client, commands, buttonEvents) {
-    clientSrc = client;
-    commandsSrc = commands;
-    buttonEventsSrc = buttonEvents;
-
-    clientSrc.on(Events.ThreadCreate, async (thread) => {
+  execute: function (botManagerInstance) {
+    botManager = botManagerInstance;
+    botManager.Client.on(Events.ThreadCreate, async (thread) => {
       // ドキュメント投稿
-      const config = require("../Data/config.json");
-      const user = await clientSrc.users.fetch(thread.ownerId);
-      const channel = clientSrc.channels.cache.get(config.TokeChannelID);
+      const user = await botManager.Client.users.fetch(thread.ownerId);
+      const channel = botManager.Client.channels.cache.get(
+        config.TokeChannelID
+      );
       const embed = new EmbedBuilder()
         .setTitle("フォーラム通知")
         .setDescription("新規スレッドが投稿されました！" + "👏")

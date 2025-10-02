@@ -1,17 +1,11 @@
 const { Events } = require("discord.js");
-
-let clientSrc = undefined;
-let commandsSrc = {};
-let buttonEventsSrc = {};
+let botManager = null;
 
 //メンバーが増えたら発火する。
 module.exports = {
   data: { name: "ErrorEvent" },
-  execute: function (client, commands, buttonEvents) {
-    clientSrc = client;
-    commandsSrc = commands;
-    buttonEventsSrc = buttonEvents;
-
+  execute: function (botManagerInstance) {
+    botManager = botManagerInstance;
     /*process.on("unhandledRejection", async (error) => {
       await message.channel.send(error);
     });*/

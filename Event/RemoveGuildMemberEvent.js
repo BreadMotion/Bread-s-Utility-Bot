@@ -1,20 +1,14 @@
 const { Events } = require("discord.js");
 const { setTimeout } = require("node:timers/promises");
-
-let clientSrc = undefined;
-let commandsSrc = {};
-let buttonEventsSrc = {};
+const config = require("../Data/config.json");
+let botManager = null;
 
 //メンバーが減ったら発火する。
 module.exports = {
   data: { name: "guildMemberRemove" },
-  execute: function (client, commands, buttonEvents) {
-    clientSrc = client;
-    commandsSrc = commands;
-    buttonEventsSrc = buttonEvents;
-
-    clientSrc.on(Events.GuildMemberRemove, async (member) => {
-      const config = require("../Data/config.json");
+  execute: function (botManagerInstance) {
+    botManager = botManagerInstance;
+    botManager.Client.on(Events.GuildMemberRemove, async (member) => {
       const channel = oldState.member.guild.channels.cache.get(
         config.TokeChannelID
       );

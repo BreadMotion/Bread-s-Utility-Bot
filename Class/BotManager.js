@@ -7,7 +7,7 @@ class BotManager {
    * @param {Client<Boolean>} client
    * @param {*} events
    * @param {*} commands
-   * @param {*} buttonEvents */
+   * @param {*} ButtonEvents */
   constructor(client, events, commands, buttonEvents) {
     /** @type {Client<Boolean>} */
     this.Client = client;
@@ -16,7 +16,7 @@ class BotManager {
     /** @type {*} */
     this.Events = events;
     /** @type {*} */
-    this.buttonEvents = buttonEvents;
+    this.ButtonEvents = buttonEvents;
 
     this.#RegistEvents();
     this.#Login();
@@ -24,8 +24,9 @@ class BotManager {
 
   /**イベント登録*/
   #RegistEvents() {
-    for (const event in this.Events)
-      this.Events[event].execute(this.Client, this.Commands, this.buttonEvents);
+    for (const event in this.Events) {
+      this.Events[event].execute(this);
+    }
   }
 
   /**ログイン処理*/

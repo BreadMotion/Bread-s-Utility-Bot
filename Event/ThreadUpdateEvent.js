@@ -1,21 +1,17 @@
 const { EmbedBuilder, AuditLogEvent, Client, Events } = require("discord.js");
-
-let clientSrc = undefined;
-let commandsSrc = {};
-let buttonEventsSrc = {};
+let botManager = null;
 
 module.exports = {
   data: { name: "ThreadUpdateEvent" },
-  execute: function (client, commands, buttonEvents) {
-    clientSrc = client;
-    commandsSrc = commands;
-    buttonEventsSrc = buttonEvents;
-
-    clientSrc.on(Events.ThreadUpdate, async (oldThread, newThread) => {
+  execute: function (botManagerInstance) {
+    botManager = botManagerInstance;
+    botManager.Client.on(Events.ThreadUpdate, async (oldThread, newThread) => {
       // ドキュメント投稿
       const config = require("../Data/config.json");
-      const user = await clientSrc.users.fetch(newThread.ownerId);
-      const channel = clientSrc.channels.cache.get(config.TokeChannelID);
+      const user = await botManager.Client.users.fetch(newThread.ownerId);
+      const channel = botManager.Client.channels.cache.get(
+        config.TokeChannelID
+      );
       let reportContent = "";
 
       if (

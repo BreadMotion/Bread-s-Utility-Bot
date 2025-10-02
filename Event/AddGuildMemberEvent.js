@@ -1,22 +1,18 @@
 const { Events } = require("discord.js");
 const { setTimeout } = require("node:timers/promises");
-
-let clientSrc = undefined;
-let commandsSrc = {};
-let buttonEventsSrc = {};
+const config = require("../Data/config.json");
+let botManager = null;
 
 //メンバーが増えたら発火する。
 module.exports = {
   data: { name: "GuildMemberAdd" },
-  execute: function (client, commands, buttonEvents) {
-    clientSrc = client;
-    commandsSrc = commands;
-    buttonEventsSrc = buttonEvents;
-
-    clientSrc.on(Events.GuildMemberAdd, async (member) => {
+  execute: function (botManagerInstance) {
+    botManager = botManagerInstance;
+    botManager.Client.on(Events.GuildMemberAdd, async (member) => {
       console.log("call : guildMemberAdd Event");
-      const config = require("../Data/config.json");
-      const channel = clientSrc.channels.cache.get(config.TokeChannelID);
+      const channel = botManager.Client.channels.cache.get(
+        config.TokeChannelID
+      );
       const reply = await channel.send(
         `${member.user.username}が参加しました。`
       );
