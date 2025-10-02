@@ -1,15 +1,12 @@
 const {
   SlashCommandBuilder,
-  PermissionFlagsBits,
-  ChatInputCommandInteraction,
   EmbedBuilder,
   ActionRowBuilder,
   ButtonBuilder,
   ButtonStyle,
 } = require("discord.js");
-const { setTimeout } = require("node:timers/promises");
 
-/** /txtdel　選択したメンバーのメッセージを削除するスラッシュコマンド*/
+/**投票チャット作成*/
 module.exports = {
   name: "vote",
   data: new SlashCommandBuilder()
@@ -29,8 +26,8 @@ module.exports = {
       .setDescription("**Question:**\n" + title)
       .setImage("https://i.ibb.co/vxdBKFd/Untitled-1.gif")
       .addFields([
-        { name: "Yes's", value: "0", inline: true },
-        { name: "No's", value: "0", inline: true },
+        { name: "Yes", value: "0", inline: true },
+        { name: "No", value: "0", inline: true },
       ])
       .setColor([104, 204, 156]);
 

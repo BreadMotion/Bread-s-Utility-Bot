@@ -1,7 +1,6 @@
 const { SlashCommandBuilder } = require("discord.js");
-const { setTimeout } = require("node:timers/promises");
 
-/** /hello オンラインのメンバーをメンションします。*/
+/**オンラインのメンバーをメンションします。*/
 module.exports = {
   RecruiteData: {},
   name: "Recruite",
@@ -9,7 +8,7 @@ module.exports = {
     .setName("recr")
     .setDescription("メンバー募集します")
     .addStringOption((option) =>
-      option.setName("game").setDescription("募集するゲーム").setRequired(true)
+      option.setName("game").setDescription("募集内容").setRequired(true)
     )
     .addStringOption((option) =>
       option.setName("num").setDescription("募集人数、半角で").setRequired(true)
@@ -23,7 +22,6 @@ module.exports = {
       gamename: game,
       num: Number(num),
     };
-    const keyname = `${member.user.username}-${game}`;
     var str = "";
 
     Object.keys(this.RecruiteData).forEach((username) => {
@@ -34,13 +32,7 @@ module.exports = {
       `<@&1054712587020939344> ${member.user.username}が${game}で${num}人募集中です。`
     );
     const reply2 = await interaction.followUp(
-      `現在募集しているゲームと人数一覧を表示します。${"\n"}${str}`
+      `現在募集コンテンツと人数を表示します。${"\n"}${str}`
     );
-    await setTimeout(1000 * 60 * 45); //5分後削除
-    await reply.delete();
-    await reply2.delete();
-
-    await setTimeout(1000 * 60 * 45); //45分後削除
-    await delete this.RecruiteData[`${member.user.username}-${game}`];
   },
 };

@@ -1,7 +1,20 @@
 const { SlashCommandBuilder } = require("discord.js");
-const { setTimeout } = require("node:timers/promises");
 
-/** /info ギルドの情報を取得します。*/
+/**メンバー配列からタグ配列取得
+ * @param {Member[]} members
+ * @return {string[]}*/
+function GetMembersTag(members) {
+  return members.map((member) => member.user.tag);
+}
+
+/**メンバー配列から名前配列取得
+ * @param {Member[]} members
+ * @return {string[]}*/
+function GetMembersName(members) {
+  return members.map((member) => member.user.username);
+}
+
+/**ギルドの情報を取得します。*/
 module.exports = {
   name: "guildInfo",
   data: new SlashCommandBuilder()
@@ -18,31 +31,26 @@ module.exports = {
   execute: async function (interaction) {
     const info = interaction.options.getString("情報") || "NONE";
     const members = await interaction.member.guild.members.fetch();
+
     let result = `このサーバーの全メンバーの`;
     if (info === "0") {
-      const tags = members.map((member) => member.user.tag);
+      const tags = GetMembersTag(members);
       result += `タグ${"\n"}`;
       for (const tag of tags) {
         result += `${tag}${"\n"}`;
       }
-      const reply = await interaction.reply(result);
-      await setTimeout(1000 * 60 * 5); //5分後削除
-      await reply.delete();
+      await interaction.reply(result);
     } else if (info === "1") {
-      const names = members.map((member) => member.user.username);
+      const names = GetMembersName(members);
       result += `名前${"\n"}`;
       for (const name of names) {
         result += `${name}${"\n"}`;
       }
-      const reply = await interaction.reply(result);
-      await setTimeout(1000 * 60 * 5); //5分後削除
-      await reply.delete();
+      interaction.reply(result);
     } else {
-      const reply = await interaction.reply(
+      await interaction.reply(
         `取得したい情報が分かりませんでした。: Target Infomation -> ${info}`
       );
-      await setTimeout(1000 * 60 * 5); //5分後削除
-      await reply.delete();
     }
   },
 };
