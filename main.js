@@ -1,27 +1,5 @@
-const { Client, GatewayIntentBits } = require("discord.js");
 const fs = require("fs");
-
-/** discord.jsのClient APIを生成
- * @type {Client<Boolean>} */
-const client = new Client({
-  intents: [
-    GatewayIntentBits.Guilds,
-    GatewayIntentBits.GuildMessages,
-    GatewayIntentBits.MessageContent,
-    GatewayIntentBits.GuildMembers,
-    GatewayIntentBits.GuildModeration,
-    GatewayIntentBits.GuildPresences,
-    GatewayIntentBits.GuildWebhooks,
-    GatewayIntentBits.GuildInvites,
-    GatewayIntentBits.GuildVoiceStates,
-    GatewayIntentBits.GuildIntegrations,
-    GatewayIntentBits.AutoModerationConfiguration,
-    GatewayIntentBits.AutoModerationExecution,
-    GatewayIntentBits.GuildMessageReactions,
-    GatewayIntentBits.GuildMessageTyping,
-    GatewayIntentBits.GuildScheduledEvents,
-  ],
-});
+const { BotManager } = require("./Class/BotManager.js");
 
 /** 指定ディレクトリのJSファイル一覧読み込み
  * @param {String} fileLayer
@@ -44,10 +22,8 @@ function LoadModule(src, fileLayer) {
   return result;
 }
 
-// ボットの作成とログイン処理
-const { BotManager } = require("./Class/BotManager.js");
-const botManager = new BotManager(
-  client,
+// ボットの作成
+new BotManager(
   LoadModule(GetJSFile("./Event"), "Event"),
   LoadModule(GetJSFile("./Command"), "Command"),
   LoadModule(GetJSFile("./Event/Button"), "Event/Button")

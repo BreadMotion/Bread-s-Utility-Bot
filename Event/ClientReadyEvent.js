@@ -1,28 +1,25 @@
+/**
+ * @typedef {import('discord.js').Client} Client
+ */
 const { Events } = require("discord.js");
+const { BotManager } = require("../Class/BotManager");
+/**@type {BotManager}*/
 let botManager = null;
 
 // 起動処理イベント
 module.exports = {
   data: { name: "clientReady" },
+  /** ボットマネージャーのインスタンス
+   * @param {BotManager} botManagerInstance*/
   execute: function (botManagerInstance) {
     botManager = botManagerInstance;
-    botManager.Client.once(Events.ClientReady, async (message) => {
+    /**@param {Client<Boolean>} _*/
+    botManager.Client.once(Events.ClientReady, async (_) => {
       console.log("起動処理を開始します。");
-      const config = require("../Data/config.json");
-      const channel = botManager.Client.channels.cache.get(
-        config.TokeChannelID
-      );
-
-      const data = [];
-      console.log("コマンドの登録作業を行います。");
-      for (const command in botManager.Commands)
-        data.push(botManager.Commands[command].data);
-      await botManager.Client.application.commands.set(data, config.guildID);
-      await botManager.Client.user.setPresence({
-        activities: [{ name: "開発" }],
-        status: "Online",
-      });
+      await botManager.RegistCommand();
+      await botManager.SetPresence("開発", "Online");
       console.log("起動しました。");
+      botManager.GetTalkChannel.send("ただいま！");
     });
   },
 };
