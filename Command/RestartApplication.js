@@ -2,7 +2,7 @@
  * @typedef {import('./Interface/interface').CommandModule} CommandModule
  */
 const { SlashCommandBuilder } = require("discord.js");
-const { spawn } = require("child_process").exec;
+const { spawn } = require("child_process");
 
 /**再起動をします。
  * @type {CommandModule}*/
