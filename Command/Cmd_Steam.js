@@ -6,7 +6,7 @@ const { SlashCommandBuilder } = require("discord.js");
 const steamWebApiKey = "E4675D951E4DC7D9CA59D5CCC355289C";
 const nickName = "bread2000";
 const minPlayTime = 60;
-const fetchJson = (url) =>
+const fetchJson = (url) =>  
   new Promise((resolve, reject) => {
     console.log(`Access : ${url}`);
     fetch(url)
@@ -19,9 +19,9 @@ const fetchJson = (url) =>
 /**Steamの情報取得
  * @type {CommandModule}*/
 const command = {
-  name: "steam",
+  name: "Cmd_Steam",
   data: new SlashCommandBuilder()
-    .setName("steam")
+    .setName("cmd-steam")
     .setDescription("SteamAPI Test(まだ未実装です。)"),
   execute: async function (interaction) {
     return;

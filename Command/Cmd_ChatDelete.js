@@ -7,9 +7,9 @@ const { setTimeout } = require("node:timers/promises");
 /**選択したメンバーのメッセージを削除するスラッシュコマンド
  * @type {CommandModule}*/
 const command = {
-  name: "accountMessageDelete",
+  name: "Cmd_ChatDelete",
   data: new SlashCommandBuilder()
-    .setName("txtdel")
+    .setName("cmd-chat-delete")
     .setDescription("対象のメンバーのメッセージを削除します。")
     .addUserOption((option) =>
       option

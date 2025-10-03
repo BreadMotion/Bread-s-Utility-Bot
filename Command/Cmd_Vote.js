@@ -12,9 +12,9 @@ const {
 /**投票チャット作成
  * @type {CommandModule}*/
 const command = {
-  name: "vote",
+  name: "Cmd_Vote",
   data: new SlashCommandBuilder()
-    .setName("vote")
+    .setName("cm-vote")
     .setDescription("投票を行います。")
     .setDMPermission(false)
     .addStringOption((option) =>
@@ -25,7 +25,6 @@ const command = {
     ),
   execute: async function (interaction) {
     const title = interaction.options.getString("title");
-
     const voteEmbed = new EmbedBuilder()
       .setDescription("**Question:**\n" + title)
       .setImage("https://i.ibb.co/vxdBKFd/Untitled-1.gif")

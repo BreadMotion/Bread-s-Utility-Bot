@@ -6,9 +6,9 @@ const { SlashCommandBuilder } = require("discord.js");
 /**オンラインのメンバーをメンションします。
  * @type {CommandModule}*/
 const command = {
-  name: "onlineUserMension",
+  name: "Cmd_MensionOnline",
   data: new SlashCommandBuilder()
-    .setName("hello")
+    .setName("cmd-mension-online")
     .setDescription("オンラインメンバーをメンションします。"),
   execute: async function (interaction) {
     const guild = interaction.guild;

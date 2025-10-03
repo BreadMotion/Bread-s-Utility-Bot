@@ -21,9 +21,9 @@ function GetMembersName(members) {
 /**ギルドの情報を取得します。
  * @type {CommandModule}*/
 const command = {
-  name: "guildInfo",
+  name: "Cmd_MemberInfo",
   data: new SlashCommandBuilder()
-    .setName("ginfo")
+    .setName("cmd-member-info")
     .setDescription("ギルドの情報を取得します。")
     .addStringOption((option) =>
       option

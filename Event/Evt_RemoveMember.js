@@ -3,7 +3,7 @@
  */
 const { Events } = require("discord.js");
 const { setTimeout } = require("node:timers/promises");
-const BotManager = require("./../Class/BotManager");
+const BotManager = require("../Class/BotManager");
 
 /**参照用インスタンス
  * @type {BotManager}*/
@@ -12,7 +12,7 @@ let botManager = null;
 /**メンバー参加イベント
  * @type {EventModule} */
 const event = {
-  data: { name: "guildMemberRemove" },
+  data: { name: "EvtRemoveMember" },
   execute: function (botManagerInstance) {
     botManager = botManagerInstance;
     botManager.Client.on(Events.GuildMemberRemove, async (member) => {

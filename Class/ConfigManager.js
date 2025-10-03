@@ -19,7 +19,7 @@ class ConfigManager {
   /**Client取得
    * @return {string}*/
   static get ClientID() {
-    return config.token;
+    return config.clientID;
   }
 
   /**全サーバーID取得

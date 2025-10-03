@@ -2,7 +2,7 @@
  * @typedef {import('./Interface/interface').EventModule} EventModule
  */
 const { EmbedBuilder, Events } = require("discord.js");
-const BotManager = require("./../Class/BotManager");
+const BotManager = require("../Class/BotManager");
 
 /**参照用インスタンス
  * @type {BotManager}*/
@@ -11,7 +11,7 @@ let botManager = null;
 /**スレッド作成イベント
  * @type {EventModule} */
 const event = {
-  data: { name: "ThreadCreateEvent" },
+  data: { name: "EvtCreateThread" },
   execute: function (botManagerInstance) {
     botManager = botManagerInstance;
     botManager.Client.on(Events.ThreadCreate, async (thread) => {

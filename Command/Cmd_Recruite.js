@@ -6,9 +6,9 @@ const { SlashCommandBuilder } = require("discord.js");
 /**オンラインのメンバーをメンションします。
  * @type {CommandModule}*/
 const command = {
-  name: "Recruite",
+  name: "Cmd_Recruite",
   data: new SlashCommandBuilder()
-    .setName("recr")
+    .setName("cmd-recruite")
     .setDescription("メンバー募集します")
     .addStringOption((option) =>
       option.setName("game").setDescription("募集内容").setRequired(true)

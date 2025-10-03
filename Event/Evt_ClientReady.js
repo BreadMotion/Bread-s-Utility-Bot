@@ -3,7 +3,7 @@
  * @typedef {import('discord.js').Client} Client
  */
 const { Events } = require("discord.js");
-const BotManager = require("./../Class/BotManager");
+const BotManager = require("../Class/BotManager");
 
 /**参照用インスタンス
  * @type {BotManager}*/
@@ -12,7 +12,7 @@ let botManager = null;
 /**起動イベント
  * @type {EventModule}*/
 const event = {
-  data: { name: "clientReady" },
+  data: { name: "EvtClientReady" },
   /** ボットマネージャーのインスタンス
    * @param {BotManager} botManagerInstance*/
   execute: function (botManagerInstance) {
