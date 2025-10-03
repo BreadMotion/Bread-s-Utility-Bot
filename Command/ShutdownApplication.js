@@ -1,8 +1,12 @@
+/**
+ * @typedef {import('./Interface/interface').CommandModule} CommandModule
+ */
 const { SlashCommandBuilder } = require("discord.js");
 const exec = require("child_process").exec;
 
-/**シャットダウンします。*/
-module.exports = {
+/**シャットダウンします。
+ * @type {CommandModule}*/
+const command = {
   name: "Shutdown",
   data: new SlashCommandBuilder()
     .setName("shutdown")
@@ -14,3 +18,4 @@ module.exports = {
     });
   },
 };
+module.exports = command;

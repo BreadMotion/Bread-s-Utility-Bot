@@ -1,5 +1,5 @@
 const fs = require("fs");
-const { BotManager } = require("./Class/BotManager.js");
+const BotManager = require("./Class/BotManager");
 
 /** 指定ディレクトリのJSファイル一覧読み込み
  * @param {String} fileLayer

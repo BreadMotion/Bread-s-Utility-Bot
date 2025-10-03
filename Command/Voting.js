@@ -1,3 +1,6 @@
+/**
+ * @typedef {import('./Interface/interface').CommandModule} CommandModule
+ */
 const {
   SlashCommandBuilder,
   EmbedBuilder,
@@ -6,8 +9,9 @@ const {
   ButtonStyle,
 } = require("discord.js");
 
-/**投票チャット作成*/
-module.exports = {
+/**投票チャット作成
+ * @type {CommandModule}*/
+const command = {
   name: "vote",
   data: new SlashCommandBuilder()
     .setName("vote")
@@ -35,7 +39,10 @@ module.exports = {
       embeds: [voteEmbed],
       fetchReply: true,
     });
-    const voteButtons = new ActionRowBuilder().addComponents(
+
+    /**@type {ActionRowBuilder<ButtonBuilder>} */
+    const component = new ActionRowBuilder();
+    component.addComponents(
       new ButtonBuilder()
         .setLabel("Yes")
         .setCustomId(`Vote-Yes-${replyObject.id}`)
@@ -46,6 +53,8 @@ module.exports = {
         .setStyle(ButtonStyle.Danger)
     );
 
-    interaction.editReply({ components: [voteButtons] });
+    interaction.editReply({ components: [component] });
   },
 };
+
+module.exports = command;

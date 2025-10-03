@@ -1,8 +1,14 @@
-const { Events } = require("discord.js");
+/**
+ * @typedef {import('./../Class/BotManager')} BotManager
+ * @typedef {import('./Interface/interface').EventModule} EventModule
+ */
+
+/**@type {BotManager} */
 let botManager = null;
 
-//メンバーが増えたら発火する。
-module.exports = {
+/**エラーイベント
+ * @type {EventModule}*/
+const event = {
   data: { name: "ErrorEvent" },
   execute: function (botManagerInstance) {
     botManager = botManagerInstance;
@@ -11,3 +17,5 @@ module.exports = {
     });*/
   },
 };
+
+module.exports = event;

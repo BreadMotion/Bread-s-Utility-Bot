@@ -1,6 +1,7 @@
+/**
+ * @typedef {import('./Interface/interface').CommandModule} CommandModule
+ */
 const { SlashCommandBuilder } = require("discord.js");
-const fetch = (...args) =>
-  import("node-fetch").then(({ default: fetch }) => fetch(...args));
 
 const steamWebApiKey = "E4675D951E4DC7D9CA59D5CCC355289C";
 const nickName = "bread2000";
@@ -15,8 +16,9 @@ const fetchJson = (url) =>
       });
   });
 
-/**Steamの情報取得*/
-module.exports = {
+/**Steamの情報取得
+ * @type {CommandModule}*/
+const command = {
   name: "steam",
   data: new SlashCommandBuilder()
     .setName("steam")
@@ -75,3 +77,5 @@ module.exports = {
     );
   },
 };
+
+module.exports = command;

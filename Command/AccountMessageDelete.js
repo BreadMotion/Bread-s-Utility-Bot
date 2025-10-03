@@ -1,8 +1,12 @@
+/**
+ * @typedef {import('./Interface/interface').CommandModule} CommandModule
+ */
 const { SlashCommandBuilder } = require("discord.js");
 const { setTimeout } = require("node:timers/promises");
 
-/**選択したメンバーのメッセージを削除するスラッシュコマンド*/
-module.exports = {
+/**選択したメンバーのメッセージを削除するスラッシュコマンド
+ * @type {CommandModule}*/
+const command = {
   name: "accountMessageDelete",
   data: new SlashCommandBuilder()
     .setName("txtdel")
@@ -41,3 +45,5 @@ module.exports = {
     await reply.delete();
   },
 };
+
+module.exports = command;

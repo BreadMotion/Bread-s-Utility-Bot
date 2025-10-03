@@ -1,13 +1,18 @@
+/**
+ * @typedef {import('./Interface/interface').CommandModule} CommandModule
+ */
 const { SlashCommandBuilder } = require("discord.js");
 
-/**オンラインのメンバーをメンションします。*/
-module.exports = {
+/**オンラインのメンバーをメンションします。
+ * @type {CommandModule}*/
+const command = {
   name: "onlineUserMension",
   data: new SlashCommandBuilder()
     .setName("hello")
     .setDescription("オンラインメンバーをメンションします。"),
   execute: async function (interaction) {
-    const members = await interaction.member.guild.members.fetch();
+    const guild = interaction.guild;
+    const members = await guild.members.fetch();
     const online = members.map((d) => {
       if (!d.user.bot && d.presence?.status == "online")
         return `<@${d.user.id}>`;
@@ -15,12 +20,11 @@ module.exports = {
     });
 
     /**@type {string[]}*/
-    let onlineMembers = online.filter((d) => d != null).join("\n");
-    for (let element of onlineMembers) {
-      element = "- " + element;
-    }
-
-    /**@type {}*/
+    let onlineMembers = online.filter((d) => d != null);
+    for (let element of onlineMembers) element = "- " + element;
+    onlineMembers.join("\n");
     await interaction.reply(`現在オンラインのメンバー:${"\n"}${onlineMembers}`);
   },
 };
+
+module.exports = command;

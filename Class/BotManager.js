@@ -2,16 +2,20 @@
  * @typedef {import('discord.js').Channel} Channel
  * @typedef {import('discord.js').TextChannel} TextChannel
  * @typedef {import('discord.js').Message} Message
+ * @typedef {import('discord.js').ClientUser} ClientUser
+ * @typedef {import('discord.js').Presence} Presence
+ * @typedef {import('discord.js').ChatInputCommandInteraction} ChatInputCommandInteraction
+ * @typedef {import('discord.js').Interaction} Interaction
  */
-const { Client, GatewayIntentBits } = require("discord.js");
-const { token, guildID, TokeChannelID } = require("../Data/config.json");
+const { Client, GatewayIntentBits, EmbedBuilder } = require("discord.js");
+const { token, guildID, TokeChannelID } = require("./../Data/config.json");
 
 /**ボット管理クラス*/
 class BotManager {
   /** コンストラクター
    * @param {*} events
    * @param {*} commands
-   * @param {*} ButtonEvents */
+   * @param {*} buttonEvents */
   constructor(events, commands, buttonEvents) {
     /** @type {Client<Boolean>} */
     this.Client = BotManager.#GenerateClient();
@@ -75,17 +79,25 @@ class BotManager {
   /**ボットの会話投稿先取得
    * @returns {TextChannel}*/
   get GetTalkChannel() {
-    return /** @type {TextChannel} */ (
+    return /**@type {TextChannel}*/ (
       this.Client.channels.cache.get(TokeChannelID)
     );
+  }
+  /** ボットのUserインスタンス取得
+   * @return {ClientUser}*/
+  get GetUser() {
+    return this.Client.user;
   }
   // #endregion ###GETTER###
   // #region ###SETTER###
   /**アカウントステータス設定
    * @param {string} activ
-   * @param {string} state*/
+   * @param {"online" | "idle" | "dnd" | "invisible"} state
+   * @returns {Promise<Presence>}*/
   async SetPresence(activ, state) {
-    await this.Client.user.setPresence({
+    /**@type {ClientUser}*/
+    const user = this.GetUser;
+    return await user.setPresence({
       activities: [{ name: activ }],
       status: state,
     });
@@ -93,14 +105,31 @@ class BotManager {
   // #endregion ###SETTER###
   // #region ###REQUEST###
   /**ボットの会話投稿先にメッセージ送信
-   * @param {string}
-   * @return {Promise<Message>}*/
-  SendMessageToTalkChannel(message) {
+   * @param {string | EmbedBuilder} message
+   * @return {Promise<Message>}}*/
+  async SendMessageToTalkChannel(message) {
     /** @type {TextChannel} */
-    const channel = this.GetTalkChannel();
-    return channel.send(message);
+    const channel = this.GetTalkChannel;
+
+    if (message instanceof EmbedBuilder)
+      return await channel.send({ embeds: [message] });
+    return await channel.send(message);
+  }
+
+  /**ボタンイベントを全実行
+   * @param {Interaction} interaction*/
+  async ExecuteAllButtonEvent(interaction) {
+    for (const event in this.ButtonEvents) {
+      await this.ButtonEvents[event].execute(interaction);
+    }
+  }
+
+  /**イベントを実行
+   * @param {ChatInputCommandInteraction} interaction*/
+  async ExecuteEvent(interaction) {
+    await this.Commands[interaction.commandName].execute(interaction);
   }
   // #endregion ###REQUEST###
 }
 
-module.exports = { BotManager };
+module.exports = BotManager;

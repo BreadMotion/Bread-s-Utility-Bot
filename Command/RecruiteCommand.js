@@ -1,8 +1,11 @@
+/**
+ * @typedef {import('./Interface/interface').CommandModule} CommandModule
+ */
 const { SlashCommandBuilder } = require("discord.js");
 
-/**オンラインのメンバーをメンションします。*/
-module.exports = {
-  RecruiteData: {},
+/**オンラインのメンバーをメンションします。
+ * @type {CommandModule}*/
+const command = {
   name: "Recruite",
   data: new SlashCommandBuilder()
     .setName("recr")
@@ -18,14 +21,15 @@ module.exports = {
     const game = interaction.options.getString("game") || "NONE";
     const num = interaction.options.getString("num") || -1;
 
-    this.RecruiteData[`${member.user.username}-${game}`] = {
+    let RecruiteData = {};
+    RecruiteData[`${member.user.username}-${game}`] = {
       gamename: game,
       num: Number(num),
     };
     var str = "";
 
-    Object.keys(this.RecruiteData).forEach((username) => {
-      str += `・${username} : ${this.RecruiteData[username].num}人${"\n"}`;
+    Object.keys(RecruiteData).forEach((username) => {
+      str += `・${username} : ${RecruiteData[username].num}人${"\n"}`;
     });
 
     const reply = await interaction.reply(
@@ -36,3 +40,5 @@ module.exports = {
     );
   },
 };
+
+module.exports = command;

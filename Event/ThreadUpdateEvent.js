@@ -1,17 +1,21 @@
+/**
+ * @typedef {import('./Interface/interface').EventModule} EventModule
+ */
 const { EmbedBuilder, AuditLogEvent, Client, Events } = require("discord.js");
+const BotManager = require("./../Class/BotManager");
+
+/**参照用インスタンス
+ * @type {BotManager}*/
 let botManager = null;
 
-module.exports = {
+/**スレッド更新イベント
+ * @type {EventModule} */
+const event = {
   data: { name: "ThreadUpdateEvent" },
   execute: function (botManagerInstance) {
     botManager = botManagerInstance;
     botManager.Client.on(Events.ThreadUpdate, async (oldThread, newThread) => {
-      // ドキュメント投稿
-      const config = require("../Data/config.json");
       const user = await botManager.Client.users.fetch(newThread.ownerId);
-      const channel = botManager.Client.channels.cache.get(
-        config.TokeChannelID
-      );
       let reportContent = "";
 
       if (
@@ -39,16 +43,18 @@ module.exports = {
         .setTitle("フォーラム通知")
         .setDescription(reportContent + "👏")
         .setFields([
-          { name: "タイトル", value: `${newThread}`, intline: true },
+          { name: "タイトル", value: `${newThread}`, inline: true },
           { name: "投稿者", value: `${user}`, inline: true },
-          { name: "更新者", value: `${log.executor}`, intline: true },
-          { name: "チャンネル", value: `${newThread.parent}`, intline: true },
+          { name: "更新者", value: `${log.executor}`, inline: true },
+          { name: "チャンネル", value: `${newThread.parent}`, inline: true },
         ])
         .setFooter({ text: "Call ThreadUpdateEvent" })
         .setTimestamp()
         .setColor("#2bff67");
-      const reply = await channel.send({ embeds: [embed] });
+      const reply = await botManager.SendMessageToTalkChannel(embed);
       await reply.react("👀");
     });
   },
 };
+
+module.exports = event;
