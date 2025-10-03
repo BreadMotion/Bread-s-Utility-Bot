@@ -2,7 +2,6 @@
  * @typedef {import('./Interface/interface').CommandModule} CommandModule
  */
 const { SlashCommandBuilder } = require("discord.js");
-const path = require("path");
 const exec = require("child_process").exec;
 
 /**再起動をします。
@@ -14,8 +13,7 @@ const command = {
     .setDescription("再起動します"),
   execute: async function (interaction) {
     await interaction.reply(`再起動します。`);
-    const scriptPath = path.resolve(__dirname, "../Shell/Reset.sh");
-    exec(`Source ${scriptPath}`, (err, stdout, stderr) => {
+    exec("sh ../Shell/Reset.sh", (err, stdout, tderr) => {
       if (err) {
         console.log(err);
       }
