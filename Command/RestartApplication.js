@@ -15,7 +15,7 @@ const command = {
   execute: async function (interaction) {
     await interaction.reply(`再起動します。`);
     const scriptPath = path.resolve(__dirname, "../Shell/Reset.sh");
-    exec(`sh ${scriptPath}`, (err, stdout, stderr) => {
+    exec(`Source ${scriptPath}`, (err, stdout, stderr) => {
       if (err) {
         console.log(err);
       }
