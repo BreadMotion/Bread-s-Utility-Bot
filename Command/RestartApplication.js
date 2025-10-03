@@ -11,8 +11,7 @@ const command = {
   data: new SlashCommandBuilder()
     .setName("restart")
     .setDescription("再起動します"),
-  execute: async function (interaction) {
-    await interaction.reply(`再起動します。`);
+  execute: async function (_) {
     const path = require("path");
     const scriptPath = path.resolve(__dirname, "../Shell/Reset.sh");
     exec(`sh ${scriptPath}`, (err, stdout, stderr) => {
