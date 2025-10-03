@@ -2,8 +2,7 @@
  * @typedef {import('./Interface/interface').EventModule} EventModule
  * @typedef {import('discord.js').Client} Client
  */
-const { Events, GuildWidgetStyle } = require("discord.js");
-const ConfigManager = require("./../Class/ConfigManager");
+const { Events } = require("discord.js");
 const BotManager = require("./../Class/BotManager");
 
 /**参照用インスタンス

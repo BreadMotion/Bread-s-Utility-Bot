@@ -132,7 +132,6 @@ class BotManager {
     await this.Commands[interaction.commandName].execute(interaction);
   }
   // #endregion ###REQUEST###
-
   // #region ###UTILITY###
   /**全サーバーに処理する
    * @param {(guildID: string) => void} callback*/

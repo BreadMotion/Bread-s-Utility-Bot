@@ -5,5 +5,5 @@ git restore --staged .
 git restore .
 git pull
 node deployCommand.js
-#forever stop main.js
-#forever start main.js
+forever stop main.js
+forever start main.js
