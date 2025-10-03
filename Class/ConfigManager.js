@@ -2,9 +2,10 @@
  * @typedef {import('discord.js').Client} Client
  */
 const fs = require("fs");
+const path = require("path");
 const config = require("../Data/config.json");
-const guildPath = "../Data/guilds.json";
-let guilds = require(guildPath);
+const guildPath = path.join(__dirname, "../Data/guilds.json");
+let guilds = JSON.parse(fs.readFileSync(guildPath, "utf8"));
 
 /**設定ファイル管理クラス*/
 class ConfigManager {
@@ -21,7 +22,8 @@ class ConfigManager {
     return config.token;
   }
 
-  /**全サーバーID取得*/
+  /**全サーバーID取得
+   * @return {string[]}*/
   static get AllGetGuildID() {
     return Object.keys(guilds);
   }
@@ -47,12 +49,14 @@ class ConfigManager {
    * @param {string} guildID
    * @param {string} talkChannelID*/
   static RegistGuildInfo(client, guildID, talkChannelID) {
+    const guild = client.guilds.cache.get(guildID);
+    if (!guild) return;
     guilds[guildID] = {
       name: client.guilds.cache.get(guildID).name,
       talkChannelID: talkChannelID,
     };
     fs.writeFileSync(guildPath, JSON.stringify(guilds, null, 2), "utf8");
-    guilds = require(guildPath);
+    guilds = JSON.parse(fs.readFileSync(guildPath, "utf8"));
   }
   // #endregion ###REGIST###
 }

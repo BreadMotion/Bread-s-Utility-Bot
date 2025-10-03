@@ -138,7 +138,9 @@ class BotManager {
    * @param {(guildID: string) => void} callback*/
   static ExecuteAllGuildProcess(callback) {
     const guilds = ConfigManager.AllGetGuildID;
-    for (const guild in guilds) callback(guild);
+    for (const guild of guilds) {
+      callback(guild);
+    }
   }
   // #endregion ###UTILITY###
 }

@@ -2,7 +2,7 @@
  * @typedef {import('./Interface/interface').EventModule} EventModule
  * @typedef {import('discord.js').Client} Client
  */
-const { Events } = require("discord.js");
+const { Events, GuildWidgetStyle } = require("discord.js");
 const ConfigManager = require("./../Class/ConfigManager");
 const BotManager = require("./../Class/BotManager");
 
@@ -18,8 +18,8 @@ const event = {
    * @param {BotManager} botManagerInstance*/
   execute: function (botManagerInstance) {
     botManager = botManagerInstance;
-    /**@param {Client} client*/
-    botManager.Client.once(Events.ClientReady, async (client) => {
+    /**@param {Client} _*/
+    botManager.Client.once(Events.ClientReady, async (_) => {
       BotManager.ExecuteAllGuildProcess(async function (guild) {
         await botManager.RegistCommand(guild);
       });
@@ -29,4 +29,5 @@ const event = {
     });
   },
 };
+
 module.exports = event;
