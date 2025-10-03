@@ -51,7 +51,10 @@ const event = {
         .setFooter({ text: "Call ThreadUpdateEvent" })
         .setTimestamp()
         .setColor("#2bff67");
-      const reply = await botManager.SendMessageToTalkChannel(embed);
+      const reply = await botManager.SendMessageToTalkChannel(
+        newThread.guild.id,
+        embed
+      );
       await reply.react("👀");
     });
   },

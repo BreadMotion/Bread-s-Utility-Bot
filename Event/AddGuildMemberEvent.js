@@ -17,6 +17,7 @@ const event = {
     botManager = botManagerInstance;
     botManager.Client.on(Events.GuildMemberAdd, async (member) => {
       const reply = await botManager.SendMessageToTalkChannel(
+        member.guild.id,
         `${member.user.username}が参加しました。`
       );
       await setTimeout(1000 * 60 * 5); //5分後削除

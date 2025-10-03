@@ -3,6 +3,7 @@
  * @typedef {import('discord.js').Client} Client
  */
 const { Events } = require("discord.js");
+const ConfigManager = require("./../Class/ConfigManager");
 const BotManager = require("./../Class/BotManager");
 
 /**参照用インスタンス
@@ -17,13 +18,14 @@ const event = {
    * @param {BotManager} botManagerInstance*/
   execute: function (botManagerInstance) {
     botManager = botManagerInstance;
-    /**@param {Client} _*/
-    botManager.Client.once(Events.ClientReady, async (_) => {
-      console.log("起動処理を開始します。");
-      await botManager.RegistCommand();
-      await botManager.SetPresence("開発", "online");
-      console.log("起動しました。");
-      botManager.GetTalkChannel.send("ただいま！");
+    /**@param {Client} client*/
+    botManager.Client.once(Events.ClientReady, async (client) => {
+      BotManager.ExecuteAllGuildProcess(async function (guild) {
+        await botManager.RegistCommand(guild);
+      });
+      BotManager.ExecuteAllGuildProcess(async function (guild) {
+        botManager.SendMessageToTalkChannel(guild, "ただいま！");
+      });
     });
   },
 };

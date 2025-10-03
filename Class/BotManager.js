@@ -8,14 +8,14 @@
  * @typedef {import('discord.js').Interaction} Interaction
  */
 const { Client, GatewayIntentBits, EmbedBuilder } = require("discord.js");
-const { token, guildID, TokeChannelID } = require("./../Data/config.json");
+const ConfigManager = require("./ConfigManager");
 
 /**ボット管理クラス*/
 class BotManager {
   /** コンストラクター
    * @param {*} events
    * @param {*} commands
-   * @param {*} buttonEvents */
+   * @param {*} buttonEvents*/
   constructor(events, commands, buttonEvents) {
     /** @type {Client<Boolean>} */
     this.Client = BotManager.#GenerateClient();
@@ -63,8 +63,9 @@ class BotManager {
     }
   }
 
-  /**コマンド登録*/
-  async RegistCommand() {
+  /**コマンド登録
+   * @param {string} guildID*/
+  async RegistCommand(guildID) {
     const data = [];
     for (const command in this.Commands) data.push(this.Commands[command].data);
     await this.Client.application.commands.set(data, guildID);
@@ -72,20 +73,21 @@ class BotManager {
 
   /**ログイン処理*/
   async #Login() {
-    this.Client.login(token);
+    this.Client.login(ConfigManager.Token);
   }
   // #endregion ###INITIALIZE FUNCTION###
   // #region ###GETTER###
   /**ボットの会話投稿先取得
+   * @param {string} guildID
    * @returns {TextChannel}*/
-  get GetTalkChannel() {
+  GetTalkChannel(guildID) {
     return /**@type {TextChannel}*/ (
-      this.Client.channels.cache.get(TokeChannelID)
+      this.Client.channels.cache.get(ConfigManager.GetTalkChannel(guildID))
     );
   }
   /** ボットのUserインスタンス取得
    * @return {ClientUser}*/
-  get GetUser() {
+  get User() {
     return this.Client.user;
   }
   // #endregion ###GETTER###
@@ -96,7 +98,7 @@ class BotManager {
    * @returns {Promise<Presence>}*/
   async SetPresence(activ, state) {
     /**@type {ClientUser}*/
-    const user = this.GetUser;
+    const user = this.User;
     return await user.setPresence({
       activities: [{ name: activ }],
       status: state,
@@ -105,12 +107,12 @@ class BotManager {
   // #endregion ###SETTER###
   // #region ###REQUEST###
   /**ボットの会話投稿先にメッセージ送信
+   * @param {string} guildID
    * @param {string | EmbedBuilder} message
    * @return {Promise<Message>}}*/
-  async SendMessageToTalkChannel(message) {
+  async SendMessageToTalkChannel(guildID, message) {
     /** @type {TextChannel} */
-    const channel = this.GetTalkChannel;
-
+    const channel = this.GetTalkChannel(guildID);
     if (message instanceof EmbedBuilder)
       return await channel.send({ embeds: [message] });
     return await channel.send(message);
@@ -130,6 +132,15 @@ class BotManager {
     await this.Commands[interaction.commandName].execute(interaction);
   }
   // #endregion ###REQUEST###
+
+  // #region ###UTILITY###
+  /**全サーバーに処理する
+   * @param {(guildID: string) => void} callback*/
+  static ExecuteAllGuildProcess(callback) {
+    const guilds = ConfigManager.AllGetGuildID;
+    for (const guild in guilds) callback(guild);
+  }
+  // #endregion ###UTILITY###
 }
 
 module.exports = BotManager;

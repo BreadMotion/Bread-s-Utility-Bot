@@ -1,9 +1,12 @@
 /**
- * @typedef {import('./../Class/BotManager')} BotManager
  * @typedef {import('./Interface/interface').EventModule} EventModule
  */
+const { Events } = require("discord.js");
+const ConfigManager = require("./../Class/ConfigManager");
+const BotManager = require("./../Class/BotManager");
 
-/**@type {BotManager} */
+/**参照用インスタンス
+ * @type {BotManager}*/
 let botManager = null;
 
 /**エラーイベント
@@ -12,9 +15,11 @@ const event = {
   data: { name: "ErrorEvent" },
   execute: function (botManagerInstance) {
     botManager = botManagerInstance;
-    /*process.on("unhandledRejection", async (error) => {
-      await message.channel.send(error);
-    });*/
+    botManager.Client.on("unhandledRejection", async (error) => {
+      BotManager.ExecuteAllGuildProcess(async function (guild) {
+        await botManager.SendMessageToTalkChannel(guild, error);
+      });
+    });
   },
 };
 

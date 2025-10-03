@@ -17,6 +17,7 @@ const event = {
     botManager = botManagerInstance;
     botManager.Client.on(Events.GuildMemberRemove, async (member) => {
       const reply = await botManager.SendMessageToTalkChannel(
+        member.guild.id,
         `${member.user.username}がチャンネルから退場しました。`
       );
       await setTimeout(1000 * 60 * 5); //5分後削除
