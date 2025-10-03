@@ -14,7 +14,7 @@ const command = {
   execute: async function (_) {
     const path = require("path");
     const scriptPath = path.resolve(__dirname, "../Shell/Reset.sh");
-    exec(`sh ${scriptPath}`, (err, stdout, stderr) => {
+    exec(`source ${scriptPath}`, (err, stdout, stderr) => {
       if (err) {
         console.log(err);
       }
