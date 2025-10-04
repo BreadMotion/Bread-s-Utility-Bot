@@ -6,15 +6,17 @@
  * @typedef {import('discord.js').Presence} Presence
  * @typedef {import('discord.js').ChatInputCommandInteraction} ChatInputCommandInteraction
  * @typedef {import('discord.js').Interaction} Interaction
+ * @typedef {import('Event/Interface/interface').EventModule} EventModule
+ * @typedef {import('Command/Interface/interface').CommandModule} CommandModule
  */
-const { Client, GatewayIntentBits, EmbedBuilder, ThreadMemberFlagsBitField } = require("discord.js");
+const { Client, GatewayIntentBits, EmbedBuilder } = require("discord.js");
 const ConfigManager = require("./ConfigManager");
 
 /**ボット管理クラス*/
 class BotManager {
   /** コンストラクター
-   * @param {*} events
-   * @param {*} commands
+   * @param {Record<string, EventModule>} events
+   * @param {Record<string, CommandModule>} commands
    * @param {*} buttonEvents*/
   constructor(events, commands, buttonEvents) {
     if(BotManager.I)
@@ -22,13 +24,13 @@ class BotManager {
     else 
       BotManager.I = this;
 
-    /** @type {Client<Boolean>} */
+    /**@type {Client<Boolean>} */
     this.Client = BotManager.#GenerateClient();
-    /** @type {*} */
+    /**@type {Record<string, CommandModule>} */
     this.Commands = commands;
-    /** @type {*} */
+    /**@type {Record<string, EventModule>} */
     this.Events = events;
-    /** @type {*} */
+    /**@type {*} */
     this.ButtonEvents = buttonEvents;
 
     this.#RegistEvents();
@@ -70,14 +72,6 @@ class BotManager {
       this.Events[event].execute();
     }
   }
-
-  /**コマンド登録
-   * @param {string} guildID
-  async RegistCommand(guildID) {
-    const data = [];
-    for (const command in this.Commands) data.push(this.Commands[command].data);
-    await this.Client.application.commands.set(data, guildID);
-  }*/
 
   /**ログイン処理*/
   async #Login() {

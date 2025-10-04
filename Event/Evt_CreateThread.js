@@ -4,10 +4,12 @@
 const { EmbedBuilder, Events } = require("discord.js");
 const BotManager = require("../Class/BotManager");
 
+const EventName = "EvtCreateThread"; 
+
 /**スレッド作成イベント
  * @type {EventModule} */
 const event = {
-  name: "EvtCreateThread",
+  name: EventName,
   execute: function () {
     BotManager.I.Client.on(Events.ThreadCreate, async (thread) => {
       const user = await BotManager.I.Client.users.fetch(thread.ownerId);
@@ -19,7 +21,7 @@ const event = {
           { name: "投稿者", value: `${user}`, inline: true },
           { name: "チャンネル", value: `${thread.parent}`, inline: true },
         ])
-        .setFooter({ text: "Call ThreadCreateEvent" })
+        .setFooter({ text: `Call ${EventName}`})
         .setTimestamp()
         .setColor("#2bff67");
       const reply = await BotManager.I.SendMessageToTalkChannel(
