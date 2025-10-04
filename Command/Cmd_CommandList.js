@@ -87,8 +87,8 @@ const command = {
       if(cmd.options && cmd.options.length > 0)
       {
         optionDesc = cmd.options.map(opt => {
-          return `\`${opt.name}\` (${OptionTypeName(opt.type)}) - ${opt.description || ""}`;
-        }).join("/n");
+          return `\`# ${opt.name}\` (${OptionTypeName(opt.type)}) - ${opt.description || ""}`;
+        }).join("\n");
       }
       
       fields.push({
