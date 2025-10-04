@@ -67,7 +67,7 @@ const OptionData = [
   {
     name: "limit",
     description: "フェッチ数を指定" ,
-    type: OptionType.Integer,
+    type: OptionType.String,
     required: true,
   },
   {

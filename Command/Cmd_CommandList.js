@@ -103,8 +103,8 @@ const command = {
       .setFields(fields)
       .setFooter({text: `Call ${CommandName}` })
       .setTimestamp()
-      .setColor("#fa4700ff");
-    await interaction.reply("コマンド一覧");
+      .setColor("#fa4700");
+      await BotManager.I.SendMessageToTalkChannel(interaction.guild.id, embed);
   },
 };
 

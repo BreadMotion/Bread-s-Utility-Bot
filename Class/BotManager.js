@@ -131,6 +131,7 @@ class BotManager {
   /**コマンドを実行
    * @param {ChatInputCommandInteraction} interaction*/
   async ExecuteCommand(interaction) {
+    console.log('test');
     await this.Commands[interaction.commandName].execute(interaction);
   }
   // #endregion ###REQUEST###
