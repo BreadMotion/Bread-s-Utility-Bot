@@ -67,12 +67,8 @@ const command = {
   execute: async function (_) {
     const path = require("path");
     const scriptPath = path.resolve(__dirname, "../Shell/DeployCommand.sh");
-    const subprocess = spawn("sh", [scriptPath], {
-      detached: true,
-      stdio: "ignore",
-    });
+    const subprocess = spawn("sh", [scriptPath]);
     subprocess.unref();
-    process.exit();
   },
 };
 
