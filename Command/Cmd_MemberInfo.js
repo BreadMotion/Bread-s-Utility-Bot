@@ -59,12 +59,12 @@ const CommandDesc = "サーバーメンバーを取得";
  * @type {ApplicationCommandOptionData[]}*/
 const OptionData = [
   {
-    name: "info type",
-    description: "",
-    type: OptionType.String,
+    name: "info-type",
+    description: "基本情報の設定",
+    type: OptionType.Integer,
     choices: [
-      { name: "タグ", value: 0 },
-      { name: "名前", value: 1 },
+      { name: "タグ", value: "0" },
+      { name: "名前", value: "1" },
     ],
     required: true,
   }
