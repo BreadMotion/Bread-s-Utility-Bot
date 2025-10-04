@@ -8,7 +8,7 @@ const BotManager = require("../Class/BotManager");
 /**メンバー参加イベント
  * @type {EventModule}*/
 const event = {
-  data: { name: "EvtAddMember" },
+  name: "EvtAddMember",
   execute: function () {
     BotManager.I.Client.on(Events.GuildMemberAdd, async (member) => {
       const reply = await BotManager.I.SendMessageToTalkChannel(

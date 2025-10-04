@@ -7,7 +7,7 @@ const BotManager = require("../Class/BotManager");
 /**コマンド検知イベント
  * @type {EventModule}*/
 const event = {
-  data: { name: "EvtInteractCreate" },
+  name: "EvtInteractCreate",
   execute: function () {
     BotManager.I.Client.on(Events.InteractionCreate, async (interaction) => {
       await BotManager.I.ExecuteAllButtonEvent(interaction);

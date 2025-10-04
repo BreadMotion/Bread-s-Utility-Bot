@@ -8,13 +8,10 @@ const BotManager = require("../Class/BotManager");
 /**起動イベント
  * @type {EventModule}*/
 const event = {
-  data: { name: "EvtClientReady" },
+  name: "EvtClientReady",
   execute: function () {
     /**@param {Client} _*/
     BotManager.I.Client.once(Events.ClientReady, async (_) => {
-      BotManager.ExecuteAllGuildProcess(async function (guild) {
-        await BotManager.I.RegistCommand(guild);
-      });
       BotManager.ExecuteAllGuildProcess(async function (guild) {
         BotManager.I.SendMessageToTalkChannel(guild, "ただいま！");
       });

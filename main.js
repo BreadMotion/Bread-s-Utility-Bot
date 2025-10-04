@@ -14,7 +14,7 @@ function GetJSFile(fileLayer) {
  * @param {string} fileLayer
  * @return {*} */
 function LoadModule(src, fileLayer) {
-  let result = [];
+  let result = {};
   for (const file of src) {
     const item = require(`./${fileLayer}/${file}`);
     result[item.name] = item;

@@ -7,7 +7,7 @@ const BotManager = require("../Class/BotManager");
 /**スレッド作成イベント
  * @type {EventModule} */
 const event = {
-  data: { name: "EvtCreateThread" },
+  name: "EvtCreateThread",
   execute: function () {
     BotManager.I.Client.on(Events.ThreadCreate, async (thread) => {
       const user = await BotManager.I.Client.users.fetch(thread.ownerId);
