@@ -6,5 +6,4 @@ git restore .
 git pull
 
 echo "Restart Bot"
-forever stop main.js
-forever start main.js
+forever restart main.js
