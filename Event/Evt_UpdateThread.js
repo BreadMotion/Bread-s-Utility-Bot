@@ -4,18 +4,13 @@
 const { EmbedBuilder, AuditLogEvent, Client, Events } = require("discord.js");
 const BotManager = require("../Class/BotManager");
 
-/**参照用インスタンス
- * @type {BotManager}*/
-let botManager = null;
-
 /**スレッド更新イベント
  * @type {EventModule} */
 const event = {
   data: { name: "EvtUpdateThread" },
-  execute: function (botManagerInstance) {
-    botManager = botManagerInstance;
-    botManager.Client.on(Events.ThreadUpdate, async (oldThread, newThread) => {
-      const user = await botManager.Client.users.fetch(newThread.ownerId);
+  execute: function () {
+    BotManager.I.Client.on(Events.ThreadUpdate, async (oldThread, newThread) => {
+      const user = await BotManager.I.Client.users.fetch(newThread.ownerId);
       let reportContent = "";
 
       if (
@@ -51,7 +46,7 @@ const event = {
         .setFooter({ text: "Call ThreadUpdateEvent" })
         .setTimestamp()
         .setColor("#2bff67");
-      const reply = await botManager.SendMessageToTalkChannel(
+      const reply = await BotManager.I.SendMessageToTalkChannel(
         newThread.guild.id,
         embed
       );

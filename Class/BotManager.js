@@ -7,7 +7,7 @@
  * @typedef {import('discord.js').ChatInputCommandInteraction} ChatInputCommandInteraction
  * @typedef {import('discord.js').Interaction} Interaction
  */
-const { Client, GatewayIntentBits, EmbedBuilder } = require("discord.js");
+const { Client, GatewayIntentBits, EmbedBuilder, ThreadMemberFlagsBitField } = require("discord.js");
 const ConfigManager = require("./ConfigManager");
 
 /**ボット管理クラス*/
@@ -17,6 +17,11 @@ class BotManager {
    * @param {*} commands
    * @param {*} buttonEvents*/
   constructor(events, commands, buttonEvents) {
+    if(BotManager.I)
+      return BotManager.I;
+    else 
+      BotManager.I = this;
+
     /** @type {Client<Boolean>} */
     this.Client = BotManager.#GenerateClient();
     /** @type {*} */
@@ -29,6 +34,9 @@ class BotManager {
     this.#RegistEvents();
     this.#Login();
   }
+
+  /**@type {BotManager}*/
+  static I;
 
   // #region ###GENERATE FUNCTION###
   /**DiscordAPIのClient<Boolean>を作成する
@@ -59,17 +67,17 @@ class BotManager {
   /**イベント登録*/
   #RegistEvents() {
     for (const event in this.Events) {
-      this.Events[event].execute(this);
+      this.Events[event].execute();
     }
   }
 
   /**コマンド登録
-   * @param {string} guildID*/
+   * @param {string} guildID
   async RegistCommand(guildID) {
     const data = [];
     for (const command in this.Commands) data.push(this.Commands[command].data);
     await this.Client.application.commands.set(data, guildID);
-  }
+  }*/
 
   /**ログイン処理*/
   async #Login() {
@@ -126,9 +134,9 @@ class BotManager {
     }
   }
 
-  /**イベントを実行
+  /**コマンドを実行
    * @param {ChatInputCommandInteraction} interaction*/
-  async ExecuteEvent(interaction) {
+  async ExecuteCommand(interaction) {
     await this.Commands[interaction.commandName].execute(interaction);
   }
   // #endregion ###REQUEST###

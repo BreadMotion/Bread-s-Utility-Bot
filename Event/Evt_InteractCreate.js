@@ -4,21 +4,16 @@
 const { Events } = require("discord.js");
 const BotManager = require("../Class/BotManager");
 
-/**参照用インスタンス
- * @type {BotManager}*/
-let botManager = null;
-
 /**コマンド検知イベント
  * @type {EventModule}*/
 const event = {
   data: { name: "EvtInteractCreate" },
-  execute: function (botManagerInstance) {
-    botManager = botManagerInstance;
-    botManager.Client.on(Events.InteractionCreate, async (interaction) => {
-      await botManager.ExecuteAllButtonEvent(interaction);
+  execute: function () {
+    BotManager.I.Client.on(Events.InteractionCreate, async (interaction) => {
+      await BotManager.I.ExecuteAllButtonEvent(interaction);
       if (!interaction.isChatInputCommand()) return;
       else {
-        botManager.ExecuteEvent(interaction);
+        BotManager.I.ExecuteCommand(interaction);
       }
     });
   },

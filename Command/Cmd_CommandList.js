@@ -1,7 +1,7 @@
 /////////////////////////////////////////////////////////////////////////////////////////////
 //////////////////////////////////////// DONT TOUCH /////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////
-// メッセージを削除します
+// コマンドリスト取得
 /** 必要型参照定義
  * @typedef {import('./Interface/interface').CommandModule} CommandModule
  * @typedef {import('discord.js').ApplicationCommandOptionData} ApplicationCommandOptionData 
@@ -44,39 +44,19 @@ const OptionType = {
 /////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////
 // ###実行時に必要なモジュール###
-const { setTimeout } = require("node:timers/promises");
+
 // ############################
 /** コマンドの名前
  * @type {string}*/
-const CommandName = "cmd-chat-delete"; 
+const CommandName = "cmd-command-list"; 
 
 /** コマンドの説明
  * @type {string}*/
-const CommandDesc = "メッセージを削除します";
+const CommandDesc = "コマンドリストを取得します";
 
 /** コマンドオプション定義
  * @type {ApplicationCommandOptionData[]}*/
-const OptionData = [
-  { 
-    name: "target",
-    description: "対象者を選択",
-    type: OptionType.User,
-    required: true,
-
-  },
-  {
-    name: "limit",
-    description: "フェッチ数を指定" ,
-    type: OptionType.Integer,
-    required: true,
-  },
-  {
-    name: "reason",
-    description: "対象のメッセージを削除する理由" ,
-    type: OptionType.String,
-    required: undefined,
-  },
-];
+const OptionData = [];
 
 /** モジュール書き出し
  * @type {CommandModule}*/
@@ -85,22 +65,7 @@ const command = {
   description: CommandDesc,
   options: OptionData,
   execute: async function (interaction) {
-    const user = interaction.options.getUser("target");
-    const limit = interaction.options.getString("limit");
-    const info = interaction.options.getString("reason") || "NONE";
-
-    const channel = interaction.channel;
-    const messages = await channel.messages.fetch({ limit: Number(limit) });
-    const filtered = messages.filter(
-      (message) => message.author.username === user.username
-    );
-
-    channel.bulkDelete(filtered);
-    const reply = await interaction.reply(
-      `${user.tag}のメッセージを全消去しました。理由->${info}\n-# このメッセージは５分後に削除されます。`
-    );
-    await setTimeout(1000 * 60 * 5); //5分後削除
-    await reply.delete();
+    await interaction.reply("コマンド一覧");
   },
 };
 

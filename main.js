@@ -17,7 +17,7 @@ function LoadModule(src, fileLayer) {
   let result = [];
   for (const file of src) {
     const item = require(`./${fileLayer}/${file}`);
-    result[item.data.name] = item;
+    result[item.name] = item;
   }
   return result;
 }

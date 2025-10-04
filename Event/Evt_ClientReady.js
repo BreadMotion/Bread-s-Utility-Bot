@@ -5,25 +5,18 @@
 const { Events } = require("discord.js");
 const BotManager = require("../Class/BotManager");
 
-/**参照用インスタンス
- * @type {BotManager}*/
-let botManager = null;
-
 /**起動イベント
  * @type {EventModule}*/
 const event = {
   data: { name: "EvtClientReady" },
-  /** ボットマネージャーのインスタンス
-   * @param {BotManager} botManagerInstance*/
-  execute: function (botManagerInstance) {
-    botManager = botManagerInstance;
+  execute: function () {
     /**@param {Client} _*/
-    botManager.Client.once(Events.ClientReady, async (_) => {
+    BotManager.I.Client.once(Events.ClientReady, async (_) => {
       BotManager.ExecuteAllGuildProcess(async function (guild) {
-        await botManager.RegistCommand(guild);
+        await BotManager.I.RegistCommand(guild);
       });
       BotManager.ExecuteAllGuildProcess(async function (guild) {
-        botManager.SendMessageToTalkChannel(guild, "ただいま！");
+        BotManager.I.SendMessageToTalkChannel(guild, "ただいま！");
       });
     });
   },

@@ -1,7 +1,7 @@
 /////////////////////////////////////////////////////////////////////////////////////////////
 //////////////////////////////////////// DONT TOUCH /////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////
-// メッセージを削除します
+// [コマンドスクリプトの概要]
 /** 必要型参照定義
  * @typedef {import('./Interface/interface').CommandModule} CommandModule
  * @typedef {import('discord.js').ApplicationCommandOptionData} ApplicationCommandOptionData 
@@ -29,7 +29,7 @@
  */
 const OptionType = {
   Subcommand: 1,
-  SubcommandGroup: 2,
+  SubcommandGr概要p: 2,
   String: 3,
   Integer: 4,
   Boolean: 5,
@@ -48,11 +48,11 @@ const { setTimeout } = require("node:timers/promises");
 // ############################
 /** コマンドの名前
  * @type {string}*/
-const CommandName = "cmd-chat-delete"; 
+const CommandName = "cmd-[コマンド文字列入力]"; 
 
 /** コマンドの説明
  * @type {string}*/
-const CommandDesc = "メッセージを削除します";
+const CommandDesc = "[コマンド入中のメッセージ]";
 
 /** コマンドオプション定義
  * @type {ApplicationCommandOptionData[]}*/
@@ -83,7 +83,7 @@ const OptionData = [
 const command = {
   name: CommandName,
   description: CommandDesc,
-  options: OptionData,
+  data: OptionData,
   execute: async function (interaction) {
     const user = interaction.options.getUser("target");
     const limit = interaction.options.getString("limit");
