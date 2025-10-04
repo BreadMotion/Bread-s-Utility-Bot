@@ -1,7 +1,5 @@
 const { REST, Routes } = require("discord.js");
 const ConfigManager = require("./Class/ConfigManager");
-
-//ファイルシステムを使用して./Commandにあるソースからモジュールをロードします。
 const fs = require("node:fs");
 const commands = [];
 const commandFiles = fs

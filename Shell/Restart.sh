@@ -1,9 +1,10 @@
 #!/bin/sh
-echo コード更新
+echo "Git Pull"
 git fetch --prune origin
 git restore --staged .
 git restore .
 git pull
-node deployCommand.js
+
+echo "Restart Bot"
 forever stop main.js
 forever start main.js

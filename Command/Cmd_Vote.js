@@ -1,28 +1,81 @@
-/**
+/////////////////////////////////////////////////////////////////////////////////////////////
+//////////////////////////////////////// DONT TOUCH /////////////////////////////////////////
+/////////////////////////////////////////////////////////////////////////////////////////////
+// 投票チャット作成
+/** 必要型参照定義
  * @typedef {import('./Interface/interface').CommandModule} CommandModule
+ * @typedef {import('discord.js').ApplicationCommandOptionData} ApplicationCommandOptionData 
  */
+/** オプション定義 
+ * @typedef {Object} CommandOption 
+ * @property {string} name - オプション名（小文字のみ、1-32文字） 
+ * @property {string} description - 説明文（1-100文字） 
+ * @property {number} type - オプションタイプ。以下の列挙を参照 
+ * @property {boolean} [required] - 必須かどうか 
+ * @property {CommandOptionChoice[]} [choices] - 選択肢を指定する場合 
+ * @property {number[]} [channelTypes] - type が Channel の場合、許可するチャンネル種別 
+ * @property {number} [minValue] - Number / Integer の最小値 
+ * @property {number} [maxValue] - Number / Integer の最大値 
+ * @property {boolean} [autocomplete] - オートコンプリートを有効にするか 
+ * @property {CommandOption[]} [options] - サブコマンド / サブコマンドグループ用の子オプション 
+ */
+/** 選択肢定義
+ * @typedef {Object} CommandOptionChoice
+ * @property {string|number} name - 選択肢の表示名
+ * @property {string|number} value - 選択肢の値
+ */
+/** ApplicationCommandOptionType 列挙
+ * @enum {number}
+ */
+const OptionType = {
+  Subcommand: 1,
+  SubcommandGroup: 2,
+  String: 3,
+  Integer: 4,
+  Boolean: 5,
+  User: 6,
+  Channel: 7,
+  Role: 8,
+  Mentionable: 9,
+  Number: 10,
+  Attachment: 11
+};
+/////////////////////////////////////////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////////////////////////////////////////
+// ###実行時に必要なモジュール###
 const {
-  SlashCommandBuilder,
   EmbedBuilder,
   ActionRowBuilder,
   ButtonBuilder,
   ButtonStyle,
 } = require("discord.js");
+// ############################
+/** コマンドの名前
+ * @type {string}*/
+const CommandName = "cmd-vote"; 
+
+/** コマンドの説明
+ * @type {string}*/
+const CommandDesc = "投票をおこないます";
+
+/** コマンドオプション定義
+ * @type {ApplicationCommandOptionData[]}*/
+const OptionData = [
+  { 
+    name: "title", 
+    description: "投票箱のタイトルを記述", 
+    type: OptionType.String, 
+    required: true 
+  },
+];
 
 /**投票チャット作成
  * @type {CommandModule}*/
 const command = {
-  name: "Cmd_Vote",
-  data: new SlashCommandBuilder()
-    .setName("cm-vote")
-    .setDescription("投票を行います。")
-    .setDMPermission(false)
-    .addStringOption((option) =>
-      option
-        .setName("title")
-        .setDescription("投票箱のタイトルを記述してください。")
-        .setRequired(true)
-    ),
+  name: CommandName,
+  description: CommandDesc,
+  options: OptionData,
   execute: async function (interaction) {
     const title = interaction.options.getString("title");
     const voteEmbed = new EmbedBuilder()

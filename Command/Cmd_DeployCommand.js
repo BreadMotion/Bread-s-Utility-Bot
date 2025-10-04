@@ -48,11 +48,11 @@ const { spawn } = require("child_process");
 // ############################
 /** コマンドの名前
  * @type {string}*/
-const CommandName = "cmd-restart-bot"; 
+const CommandName = "cmd-deploy-command"; 
 
 /** コマンドの説明
  * @type {string}*/
-const CommandDesc = "ボットを再起動します";
+const CommandDesc = "追加されているコマンドを全サーバーで登録します。";
 
 /** コマンドオプション定義
  * @type {ApplicationCommandOptionData[]}*/
@@ -66,7 +66,7 @@ const command = {
   options: OptionData,
   execute: async function (_) {
     const path = require("path");
-    const scriptPath = path.resolve(__dirname, "../Shell/Restart.sh");
+    const scriptPath = path.resolve(__dirname, "../Shell/DeployCommand.sh");
     const subprocess = spawn("sh", [scriptPath], {
       detached: true,
       stdio: "ignore",
