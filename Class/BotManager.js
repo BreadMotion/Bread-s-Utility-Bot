@@ -9,7 +9,8 @@
  * @typedef {import('Event/Interface/interface').EventModule} EventModule
  * @typedef {import('Command/Interface/interface').CommandModule} CommandModule
  */
-const { Client, GatewayIntentBits, EmbedBuilder } = require("discord.js");
+const { Events , Client, GatewayIntentBits, EmbedBuilder } = require("discord.js");
+const { EventEmitter } = require("node:events");
 const ConfigManager = require("./ConfigManager");
 
 /**ボット管理クラス*/
@@ -19,12 +20,13 @@ class BotManager {
    * @param {Record<string, CommandModule>} commands
    * @param {*} buttonEvents*/
   constructor(events, commands, buttonEvents) {
-    if(BotManager.I)
-      return BotManager.I;
+    console.log(BotManager.I);
+    if(BotManager.I !== undefined)
+      throw new Error("重複生成が発生しています。");
     else 
       BotManager.I = this;
 
-    /**@type {Client<Boolean>} */
+    /**@type {Client} */
     this.Client = BotManager.#GenerateClient();
     /**@type {Record<string, CommandModule>} */
     this.Commands = commands;
@@ -41,8 +43,8 @@ class BotManager {
   static I;
 
   // #region ###GENERATE FUNCTION###
-  /**DiscordAPIのClient<Boolean>を作成する
-   * @returns {Client<Boolean>}*/
+  /**DiscordAPIのClientを作成する
+   * @returns {Client}*/
   static #GenerateClient() {
     return new Client({
       intents: [
@@ -131,7 +133,9 @@ class BotManager {
   /**コマンドを実行
    * @param {ChatInputCommandInteraction} interaction*/
   async ExecuteCommand(interaction) {
-    console.log('test');
+    const command = this.Commands[interaction.commandName];
+    if(command == undefined)
+      throw new Error(interaction.commandName + "がBotManagerに存在しない。\n BotManager.Commands is :" + BotManager.I.Commands); 
     await this.Commands[interaction.commandName].execute(interaction);
   }
   // #endregion ###REQUEST###

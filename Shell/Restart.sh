@@ -1,9 +1,5 @@
 #!/bin/sh
-echo "Git Pull"
-git fetch --prune origin
-git restore --staged .
-git restore .
-git pull
-
+export GIT_TERMINAL_PROMPT=0
 echo "Restart Bot"
-forever restart main.js
+pm2 restart Discord
+node DeployCommand.sh 

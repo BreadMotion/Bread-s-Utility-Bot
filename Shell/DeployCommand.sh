@@ -1,12 +1,4 @@
 #!/bin/sh
-echo "change directory to root"
-cd ../
-
-echo "Update Git"
-git fetch --prune origin
-git restore --staged .
-git restore .
-git pull
-
 echo "Deploy Command"
-node deployCommand.js
+pwd
+pm2 deployCommand.js > Log/deploy.log 2>&1

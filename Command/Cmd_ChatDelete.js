@@ -57,7 +57,7 @@ const CommandDesc = "メッセージを削除します";
 /** コマンドオプション定義
  * @type {ApplicationCommandOptionData[]}*/
 const OptionData = [
-  { 
+  /*{ 
     name: "target",
     description: "対象者を選択",
     type: OptionType.User,
@@ -67,16 +67,16 @@ const OptionData = [
   {
     name: "limit",
     description: "フェッチ数を指定" ,
-    type: OptionType.String,
+    type: OptionType.Integer,
     required: true,
   },
   {
     name: "reason",
     description: "対象のメッセージを削除する理由" ,
     type: OptionType.String,
-    required: undefined,
+    required: false,
   },
-];
+*/];
 
 /** モジュール書き出し
  * @type {CommandModule}*/

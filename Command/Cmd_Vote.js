@@ -62,12 +62,12 @@ const CommandDesc = "投票をおこないます";
 /** コマンドオプション定義
  * @type {ApplicationCommandOptionData[]}*/
 const OptionData = [
-  { 
+ /* { 
     name: "title", 
     description: "投票箱のタイトルを記述", 
     type: OptionType.String, 
     required: true 
-  },
+  },*/
 ];
 
 /**投票チャット作成

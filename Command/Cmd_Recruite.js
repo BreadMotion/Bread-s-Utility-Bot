@@ -57,8 +57,8 @@ const CommandDesc = "コンテンツを募集します";
 /** コマンドオプション定義
  * @type {ApplicationCommandOptionData[]}*/
 const OptionData = [
-  { name: "game", description: "募集内容", type: OptionType.String, required: true },
-  { name: "num", description: "募集人数", type: OptionType.Integer, required: true }
+ /* { name: "game", description: "募集内容", type: OptionType.String, required: true },
+  { name: "num", description: "募集人数", type: OptionType.Integer, required: true }*/
 ];
 
 /** モジュール書き出し

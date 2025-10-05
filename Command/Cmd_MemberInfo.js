@@ -58,7 +58,7 @@ const CommandDesc = "サーバーメンバーを取得";
 /** コマンドオプション定義
  * @type {ApplicationCommandOptionData[]}*/
 const OptionData = [
-  {
+ /* {
     name: "info-type",
     description: "基本情報の設定",
     type: OptionType.Integer,
@@ -67,7 +67,7 @@ const OptionData = [
       { name: "名前", value: "1" },
     ],
     required: true,
-  }
+  }*/
 ];
 
 /**メンバー配列からタグ配列取得
