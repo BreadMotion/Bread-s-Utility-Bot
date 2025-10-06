@@ -4,20 +4,20 @@
 // メッセージを削除します
 /** 必要型参照定義
  * @typedef {import('./Interface/interface').CommandModule} CommandModule
- * @typedef {import('discord.js').ApplicationCommandOptionData} ApplicationCommandOptionData 
+ * @typedef {import('discord.js').ApplicationCommandOptionData} ApplicationCommandOptionData
  */
-/** オプション定義 
- * @typedef {Object} CommandOption 
- * @property {string} name - オプション名（小文字のみ、1-32文字） 
- * @property {string} description - 説明文（1-100文字） 
- * @property {number} type - オプションタイプ。以下の列挙を参照 
- * @property {boolean} [required] - 必須かどうか 
- * @property {CommandOptionChoice[]} [choices] - 選択肢を指定する場合 
- * @property {number[]} [channelTypes] - type が Channel の場合、許可するチャンネル種別 
- * @property {number} [minValue] - Number / Integer の最小値 
- * @property {number} [maxValue] - Number / Integer の最大値 
- * @property {boolean} [autocomplete] - オートコンプリートを有効にするか 
- * @property {CommandOption[]} [options] - サブコマンド / サブコマンドグループ用の子オプション 
+/** オプション定義
+ * @typedef {Object} CommandOption
+ * @property {string} name - オプション名（小文字のみ、1-32文字）
+ * @property {string} description - 説明文（1-100文字）
+ * @property {number} type - オプションタイプ。以下の列挙を参照
+ * @property {boolean} [required] - 必須かどうか
+ * @property {CommandOptionChoice[]} [choices] - 選択肢を指定する場合
+ * @property {number[]} [channelTypes] - type が Channel の場合、許可するチャンネル種別
+ * @property {number} [minValue] - Number / Integer の最小値
+ * @property {number} [maxValue] - Number / Integer の最大値
+ * @property {boolean} [autocomplete] - オートコンプリートを有効にするか
+ * @property {CommandOption[]} [options] - サブコマンド / サブコマンドグループ用の子オプション
  */
 /** 選択肢定義
  * @typedef {Object} CommandOptionChoice
@@ -38,7 +38,7 @@ const OptionType = {
   Role: 8,
   Mentionable: 9,
   Number: 10,
-  Attachment: 11
+  Attachment: 11,
 };
 /////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////
@@ -48,7 +48,7 @@ const { setTimeout } = require("node:timers/promises");
 // ############################
 /** コマンドの名前
  * @type {string}*/
-const CommandName = "cmd-chat-delete"; 
+const CommandName = "cmd-chat-delete";
 
 /** コマンドの説明
  * @type {string}*/
@@ -76,7 +76,8 @@ const OptionData = [
     type: OptionType.String,
     required: false,
   },
-*/];
+*/
+];
 
 /** モジュール書き出し
  * @type {CommandModule}*/
@@ -92,10 +93,10 @@ const command = {
     const channel = interaction.channel;
     const messages = await channel.messages.fetch({ limit: Number(limit) });
     const filtered = messages.filter(
-      (message) => message.author.username === user.username
+      (message) => message.author.id === user.id
     );
 
-    channel.bulkDelete(filtered);
+    await channel.bulkDelete(filtered);
     const reply = await interaction.reply(
       `${user.tag}のメッセージを全消去しました。理由->${info}\n-# このメッセージは５分後に削除されます。`
     );
