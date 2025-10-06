@@ -24,27 +24,12 @@
  * @property {string|number} name - 選択肢の表示名
  * @property {string|number} value - 選択肢の値
  */
-/** ApplicationCommandOptionType 列挙
- * @enum {number}
- */
-const OptionType = {
-  Subcommand: 1,
-  SubcommandGroup: 2,
-  String: 3,
-  Integer: 4,
-  Boolean: 5,
-  User: 6,
-  Channel: 7,
-  Role: 8,
-  Mentionable: 9,
-  Number: 10,
-  Attachment: 11,
-};
 /////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////
 // ###実行時に必要なモジュール###
 const { setTimeout } = require("node:timers/promises");
+const { ApplicationCommandOptionType } = require("discord.js");
 // ############################
 /** コマンドの名前
  * @type {string}*/
@@ -57,26 +42,24 @@ const CommandDesc = "メッセージを削除します";
 /** コマンドオプション定義
  * @type {ApplicationCommandOptionData[]}*/
 const OptionData = [
-  /*{ 
+  {
     name: "target",
     description: "対象者を選択",
-    type: OptionType.User,
+    type: ApplicationCommandOptionType.User,
     required: true,
-
   },
   {
     name: "limit",
-    description: "フェッチ数を指定" ,
-    type: OptionType.Integer,
+    description: "フェッチ数を指定",
+    type: ApplicationCommandOptionType.Integer,
     required: true,
   },
   {
     name: "reason",
-    description: "対象のメッセージを削除する理由" ,
-    type: OptionType.String,
+    description: "対象のメッセージを削除する理由",
+    type: ApplicationCommandOptionType.String,
     required: false,
   },
-*/
 ];
 
 /** モジュール書き出し
@@ -93,10 +76,10 @@ const command = {
     const channel = interaction.channel;
     const messages = await channel.messages.fetch({ limit: Number(limit) });
     const filtered = messages.filter(
-      (message) => message.author.id === user.id
+      (message) => message.author.username === user.username
     );
 
-    await channel.bulkDelete(filtered);
+    channel.bulkDelete(filtered);
     const reply = await interaction.reply(
       `${user.tag}のメッセージを全消去しました。理由->${info}\n-# このメッセージは５分後に削除されます。`
     );

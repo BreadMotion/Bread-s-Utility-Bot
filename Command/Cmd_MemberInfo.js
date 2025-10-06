@@ -4,21 +4,21 @@
 // メンバー情報取得
 /** 必要型参照定義
  * @typedef {import('./Interface/interface').CommandModule} CommandModule
- * @typedef {import('discord.js').ApplicationCommandOptionData} ApplicationCommandOptionData 
+ * @typedef {import('discord.js').ApplicationCommandOptionData} ApplicationCommandOptionData
  * @typedef {import('discord.js').GuildMember} GuildMember
  */
-/** オプション定義 
- * @typedef {Object} CommandOption 
- * @property {string} name - オプション名（小文字のみ、1-32文字） 
- * @property {string} description - 説明文（1-100文字） 
- * @property {number} type - オプションタイプ。以下の列挙を参照 
- * @property {boolean} [required] - 必須かどうか 
- * @property {CommandOptionChoice[]} [choices] - 選択肢を指定する場合 
- * @property {number[]} [channelTypes] - type が Channel の場合、許可するチャンネル種別 
- * @property {number} [minValue] - Number / Integer の最小値 
- * @property {number} [maxValue] - Number / Integer の最大値 
- * @property {boolean} [autocomplete] - オートコンプリートを有効にするか 
- * @property {CommandOption[]} [options] - サブコマンド / サブコマンドグループ用の子オプション 
+/** オプション定義
+ * @typedef {Object} CommandOption
+ * @property {string} name - オプション名（小文字のみ、1-32文字）
+ * @property {string} description - 説明文（1-100文字）
+ * @property {number} type - オプションタイプ。以下の列挙を参照
+ * @property {boolean} [required] - 必須かどうか
+ * @property {CommandOptionChoice[]} [choices] - 選択肢を指定する場合
+ * @property {number[]} [channelTypes] - type が Channel の場合、許可するチャンネル種別
+ * @property {number} [minValue] - Number / Integer の最小値
+ * @property {number} [maxValue] - Number / Integer の最大値
+ * @property {boolean} [autocomplete] - オートコンプリートを有効にするか
+ * @property {CommandOption[]} [options] - サブコマンド / サブコマンドグループ用の子オプション
  */
 /** 選択肢定義
  * @typedef {Object} CommandOptionChoice
@@ -28,28 +28,15 @@
 /** ApplicationCommandOptionType 列挙
  * @enum {number}
  */
-const OptionType = {
-  Subcommand: 1,
-  SubcommandGroup: 2,
-  String: 3,
-  Integer: 4,
-  Boolean: 5,
-  User: 6,
-  Channel: 7,
-  Role: 8,
-  Mentionable: 9,
-  Number: 10,
-  Attachment: 11
-};
 /////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////
 // ###実行時に必要なモジュール###
-
+const { ApplicationCommandOptionType } = require("discord.js");
 // ############################
 /** コマンドの名前
  * @type {string}*/
-const CommandName = "cmd-member-info"; 
+const CommandName = "cmd-member-info";
 
 /** コマンドの説明
  * @type {string}*/
@@ -58,16 +45,16 @@ const CommandDesc = "サーバーメンバーを取得";
 /** コマンドオプション定義
  * @type {ApplicationCommandOptionData[]}*/
 const OptionData = [
- /* {
+  {
     name: "info-type",
     description: "基本情報の設定",
-    type: OptionType.Integer,
+    type: ApplicationCommandOptionType.String,
     choices: [
       { name: "タグ", value: "0" },
       { name: "名前", value: "1" },
     ],
     required: true,
-  }*/
+  },
 ];
 
 /**メンバー配列からタグ配列取得

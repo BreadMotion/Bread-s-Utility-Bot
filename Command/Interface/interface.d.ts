@@ -1,4 +1,7 @@
-import { ChatInputCommandInteraction, ApplicationCommandOptionData } from "discord.js";
+import {
+  ChatInputCommandInteraction,
+  ApplicationCommandOptionData,
+} from "discord.js";
 export type CommandModule = {
   name: string;
   description: string;

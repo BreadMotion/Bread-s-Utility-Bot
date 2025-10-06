@@ -12,31 +12,36 @@ console.log("モジュール読み込み");
 for (const file of commandFiles) {
   const command = require(`./Command/${file}`);
   console.log("loaded:" + command.name);
-  commands.push({ 
-      name: command.name, 
-      description: command.description, 
-      options: command.options, 
-    });
+  commands.push({
+    name: command.name,
+    description: command.description,
+    options: command.options,
+  });
 }
 
-(async ()=>  {
-    for (let guildId of ConfigManager.AllGetGuildID) {
-      try {
-        console.log(`Deploying to ${guildId}...`);
-        const route = Routes.applicationGuildCommands(ConfigManager.ClientID, guildId);
-        
-        // 旧コマンド削除
-        const delRes = await rest.put(route, { body: [] });
-        console.log(`Old commands cleared for ${guildId}. Response count: ${delRes.length}`);
+(async () => {
+  for (let guildId of ConfigManager.AllGetGuildID) {
+    try {
+      console.log(`Deploying to ${guildId}...`);
+      const route = Routes.applicationGuildCommands(
+        ConfigManager.ClientID,
+        guildId
+      );
 
-        // 少し休憩
-        await new Promise(r => setTimeout(r, 3000));
+      // 旧コマンド削除
+      const delRes = await rest.put(route, { body: [] });
+      console.log(
+        `Old commands cleared for ${guildId}. Response count: ${delRes.length}`
+      );
 
-        // 新規コマンド登録
-        const res = await rest.put(route, { body: commands });
-        console.log(`✅ Complete Deploy ${guildId} (${res.length} commands)`);
-      } catch (err) {
-        console.error(`❌ Failed for guild ${guildId}:`, err);
-      }
+      // 少し休憩
+      await new Promise((r) => setTimeout(r, 3000));
+
+      // 新規コマンド登録
+      const res = await rest.put(route, { body: commands });
+      console.log(`✅ Complete Deploy ${guildId} (${res.length} commands)`);
+    } catch (err) {
+      console.error(`❌ Failed for guild ${guildId}:`, err);
     }
-  })();
+  }
+})();
