@@ -6,7 +6,7 @@ const BotManager = require(path.join(__dirname,"Class/BotManager"));
  * @param {String} fileLayer
  * @return {string[]} */
 function GetJSFile(fileLayer) {
-  var files = fs.readdirSync(fileLayer);
+  var files = fs.readdirSync(path.join(__dirname, fileLayer));
   return files.filter((file) => file.endsWith(".js"));
 }
 
