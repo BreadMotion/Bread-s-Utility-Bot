@@ -1,6 +1,6 @@
 const { REST, Routes } = require("discord.js");
 const path = require("path");
-const ConfigManager = require("./Class/ConfigManager");
+const ConfigManager = require(path.join(__dirname, "Class/ConfigManager"));
 const fs = require("node:fs");
 const commands = [];
 const commandFiles = fs
