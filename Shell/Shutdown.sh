@@ -1,8 +1,9 @@
 #!/bin/sh
 export GIT_TERMINAL_PROMPT=0
-echo "Stop Bot"
-pm2 stop Discord
-#sleep 1
+echo "Stop Server Process"
+cd ~
+sh Shell/stop_server.sh
 
-#echo "Shutdown Server"
-#sudo shotdown now
+
+echo "Shutdown Server"
+sudo reboot
