@@ -1,16 +1,17 @@
 const { REST, Routes } = require("discord.js");
+const path = require("path");
 const ConfigManager = require("./Class/ConfigManager");
 const fs = require("node:fs");
 const commands = [];
 const commandFiles = fs
-  .readdirSync("./Command")
+  .readdirSync(path.join(__dirname, "Command"))
   .filter((file) => file.endsWith(".js"));
 const rest = new REST({ version: "10" }).setToken(ConfigManager.Token);
 
 //コマンドモジュール読み込み。
 console.log("モジュール読み込み");
 for (const file of commandFiles) {
-  const command = require(`./Command/${file}`);
+  const command = require(path.join(__dirname, `./Command/${file}`));
   console.log("loaded:" + command.name);
   commands.push({
     name: command.name,

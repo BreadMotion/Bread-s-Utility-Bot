@@ -1,5 +1,6 @@
 const fs = require("fs");
-const BotManager = require("./Class/BotManager");
+const path = require("path");
+const BotManager = require(path.join(__dirname,"Class/BotManager"));
 
 /** 指定ディレクトリのJSファイル一覧読み込み
  * @param {String} fileLayer
@@ -16,7 +17,7 @@ function GetJSFile(fileLayer) {
 function LoadModule(src, fileLayer) {
   let result = {};
   for (const file of src) {
-    const item = require(`./${fileLayer}/${file}`);
+    const item = require(path.join(__dirname, `./${fileLayer}/${file}`));
     result[item.name] = item;
   }
   return result;
@@ -24,7 +25,7 @@ function LoadModule(src, fileLayer) {
 
 // ボットの作成
 new BotManager(
-  LoadModule(GetJSFile("./Event"), "Event"),
-  LoadModule(GetJSFile("./Command"), "Command"),
-  LoadModule(GetJSFile("./Event/Button"), "Event/Button")
+  LoadModule(GetJSFile("Event"), "Event"),
+  LoadModule(GetJSFile("Command"), "Command"),
+  LoadModule(GetJSFile("Event/Button"), "Event/Button")
 );
