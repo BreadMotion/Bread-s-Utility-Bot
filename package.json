@@ -1,7 +1,7 @@
 {
   "name": "bread-s-utility-bot",
   "version": "1.0.0",
-  "description": "",
+  "description": "DiscordのボットDevelopUtilityのクライアント処理",
   "main": "main.js",
   "dependencies": {
     "@discordjs/core": "^2.2.2",
@@ -44,6 +44,12 @@
   },
   "scripts": {
     "start": "node main.js"
+  },
+  "scripts": {
+    "start": "node main.js",
+    "deploy": "node deployCommand.js",
+    "start:deploy": "npm run deploy && npm run start",
+    "check:guild": "node CheckGuilds.js"
   },
   "keywords": [],
   "author": "",
