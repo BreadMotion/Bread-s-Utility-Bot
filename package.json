@@ -43,9 +43,6 @@
     "ws": "^8.13.0"
   },
   "scripts": {
-    "start": "node main.js"
-  },
-  "scripts": {
     "start": "node main.js",
     "deploy": "node deployCommand.js",
     "start:deploy": "npm run deploy && npm run start",
