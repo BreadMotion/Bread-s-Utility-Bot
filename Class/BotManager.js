@@ -89,13 +89,22 @@ class BotManager {
   // #region ###GETTER###
   /**ボットの会話投稿先取得
    * @param {string} guildID
-   * @returns {TextChannel}*/
-  GetTalkChannel(guildID) {
-    return /**@type {TextChannel}*/ (
-      this.Client.channels.cache.get(
-        ConfigManager.GetTalkChannel(guildID),
-      )
-    );
+   * @returns {Promise<TextChannel|undefined>}*/
+  async GetTalkChannel(guildID) {
+    const channelId = ConfigManager.GetTalkChannel(guildID);
+    if (!channelId) return undefined;
+
+    try {
+      const channel =
+        await this.Client.channels.fetch(channelId);
+      return /** @type {TextChannel} */ (channel);
+    } catch (error) {
+      console.error(
+        `Failed to fetch channel ${channelId} for guild ${guildID}:`,
+        error,
+      );
+      return undefined;
+    }
   }
   /** ボットのUserインスタンス取得
    * @return {ClientUser}*/
@@ -103,11 +112,11 @@ class BotManager {
     return this.Client.user;
   }
 
-  GetGuildData(guildId) {
+  getGuildData(guildId) {
     return this.guildData.get(guildId);
   }
 
-  SetGuildData(guildId, data) {
+  setGuildData(guildId, data) {
     this.guildData.set(guildId, data);
   }
   // #endregion ###GETTER###
@@ -129,10 +138,18 @@ class BotManager {
   /**ボットの会話投稿先にメッセージ送信
    * @param {string} guildID
    * @param {string | EmbedBuilder} message
-   * @return {Promise<Message>}}*/
+   * @return {Promise<Message|void>}}*/
   async SendMessageToTalkChannel(guildID, message) {
     /** @type {TextChannel} */
-    const channel = this.GetTalkChannel(guildID);
+    const channel = await this.GetTalkChannel(guildID);
+
+    if (!channel) {
+      console.error(
+        `Talk channel not found or configured for guild ${guildID}.`,
+      );
+      return;
+    }
+
     if (message instanceof EmbedBuilder)
       return await channel.send({ embeds: [message] });
     return await channel.send(message);
