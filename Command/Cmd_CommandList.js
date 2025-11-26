@@ -28,7 +28,10 @@
 /////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////
 // ###実行時に必要なモジュール###
-const { EmbedBuilder, ApplicationCommandOptionType } = require("discord.js");
+const {
+  EmbedBuilder,
+  ApplicationCommandOptionType,
+} = require("discord.js");
 const BotManager = require("../Class/BotManager");
 // ############################
 /** コマンドの名前
@@ -73,12 +76,17 @@ const command = {
     }
     const embed = new EmbedBuilder()
       .setTitle("コマンド一覧")
-      .setDescription("このボットのサーバー内コマンド一覧を出力します")
+      .setDescription(
+        "このボットのコマンド一覧を出力します",
+      )
       .setFields(fields)
       .setFooter({ text: `Call ${CommandName}` })
       .setTimestamp()
       .setColor("#fa4700");
-    await BotManager.I.SendMessageToTalkChannel(interaction.guild.id, embed);
+    await BotManager.I.SendMessageToTalkChannel(
+      interaction.guild.id,
+      embed,
+    );
   },
 };
 

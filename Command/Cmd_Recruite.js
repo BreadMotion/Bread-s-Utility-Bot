@@ -29,7 +29,10 @@
 /////////////////////////////////////////////////////////////////////////////////////////////
 // ###実行時に必要なモジュール###
 
-const { ApplicationCommandOptionType } = require("discord.js");
+const {
+  ApplicationCommandOptionType,
+} = require("discord.js");
+const BotManager = require("../Class/BotManager");
 
 // ############################
 /** コマンドの名前
@@ -64,15 +67,19 @@ const command = {
   description: CommandDesc,
   options: OptionData,
   execute: async function (interaction) {
-    const member = await interaction.member;
-    const game = interaction.options.getString("game") || "NONE";
+    const guildId = interaction.guild.id;
+    const member = interaction.member;
+    const game =
+      interaction.options.getString("game") || "NONE";
     const num = interaction.options.getString("num") || -1;
 
-    let RecruiteData = {};
+    let RecruiteData =
+      BotManager.I.GetGuildData(guildId) || {};
     RecruiteData[`${member.user.username}-${game}`] = {
       gamename: game,
       num: Number(num),
     };
+    BotManager.I.SetGuildData(guildId, RecruiteData);
     var str = "";
 
     Object.keys(RecruiteData).forEach((username) => {
@@ -80,10 +87,10 @@ const command = {
     });
 
     const reply = await interaction.reply(
-      `<@&1054712587020939344> ${member.user.username}が${game}で${num}人募集中です。`
+      `${member.user.username}が${game}で${num}人募集中です。`,
     );
     const reply2 = await interaction.followUp(
-      `現在募集コンテンツと人数を表示します。${"\n"}${str}`
+      `現在募集コンテンツと人数を表示します。${"\n"}${str}`,
     );
   },
 };

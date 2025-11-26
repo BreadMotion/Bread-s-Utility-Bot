@@ -9,7 +9,12 @@
  * @typedef {import('Event/Interface/interface').EventModule} EventModule
  * @typedef {import('Command/Interface/interface').CommandModule} CommandModule
  */
-const { Events , Client, GatewayIntentBits, EmbedBuilder } = require("discord.js");
+const {
+  Events,
+  Client,
+  GatewayIntentBits,
+  EmbedBuilder,
+} = require("discord.js");
 const { EventEmitter } = require("node:events");
 const ConfigManager = require("./ConfigManager");
 
@@ -21,10 +26,9 @@ class BotManager {
    * @param {*} buttonEvents*/
   constructor(events, commands, buttonEvents) {
     console.log(BotManager.I);
-    if(BotManager.I !== undefined)
+    if (BotManager.I !== undefined)
       throw new Error("重複生成が発生しています。");
-    else 
-      BotManager.I = this;
+    else BotManager.I = this;
 
     /**@type {Client} */
     this.Client = BotManager.#GenerateClient();
@@ -34,6 +38,8 @@ class BotManager {
     this.Events = events;
     /**@type {*} */
     this.ButtonEvents = buttonEvents;
+    /**@type {Map<string, any>} */
+    this.guildData = new Map();
 
     this.#RegistEvents();
     this.#Login();
@@ -86,13 +92,23 @@ class BotManager {
    * @returns {TextChannel}*/
   GetTalkChannel(guildID) {
     return /**@type {TextChannel}*/ (
-      this.Client.channels.cache.get(ConfigManager.GetTalkChannel(guildID))
+      this.Client.channels.cache.get(
+        ConfigManager.GetTalkChannel(guildID),
+      )
     );
   }
   /** ボットのUserインスタンス取得
    * @return {ClientUser}*/
   get User() {
     return this.Client.user;
+  }
+
+  GetGuildData(guildId) {
+    return this.guildData.get(guildId);
+  }
+
+  SetGuildData(guildId, data) {
+    this.guildData.set(guildId, data);
   }
   // #endregion ###GETTER###
   // #region ###SETTER###
@@ -134,9 +150,15 @@ class BotManager {
    * @param {ChatInputCommandInteraction} interaction*/
   async ExecuteCommand(interaction) {
     const command = this.Commands[interaction.commandName];
-    if(command == undefined)
-      throw new Error(interaction.commandName + "がBotManagerに存在しない。\n BotManager.Commands is :" + BotManager.I.Commands); 
-    await this.Commands[interaction.commandName].execute(interaction);
+    if (command == undefined)
+      throw new Error(
+        interaction.commandName +
+          "がBotManagerに存在しない。\n BotManager.Commands is :" +
+          BotManager.I.Commands,
+      );
+    await this.Commands[interaction.commandName].execute(
+      interaction,
+    );
   }
   // #endregion ###REQUEST###
   // #region ###UTILITY###
